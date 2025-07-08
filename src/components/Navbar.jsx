@@ -12,15 +12,16 @@ import {
   SecondaryButton,
   SecondaryLink,
 } from "./Buttons";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, loading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const [isDark, setIsDark] = useState(false);
 
-  // Apply theme on toggle
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -122,16 +123,25 @@ const Navbar = () => {
                 {link.label}
               </NavLink>
             ))}
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-8 rounded-full">
+                  <img
+                    src="https://i.ibb.co/ZYW3VTp/brown-brim.png"
+                    alt="User"
+                  />
+                </div>
+              </label>
+            </div>
+          ) : (
+            <>
+              {" "}
+              <PrimaryLink to="/auth/login">Login</PrimaryLink>
+              <SecondaryLink to="/auth/registration">Register</SecondaryLink>
+            </>
+          )}
 
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-8 rounded-full">
-                <img src="https://i.ibb.co/ZYW3VTp/brown-brim.png" alt="User" />
-              </div>
-            </label>
-          </div>
-          <PrimaryLink>Login</PrimaryLink>
-          <SecondaryLink>Register</SecondaryLink>
           <button
             onClick={handleThemeChange}
             className="btn btn-ghost btn-circle text-xl"
