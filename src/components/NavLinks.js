@@ -1,0 +1,11 @@
+export const navLinks = [
+  { path: "/", label: "Home", roles: ["guest", "user", "admin"] },
+  { path: "/add-articles", label: "Add Articles", roles: ["user", "admin"] },
+  {
+    path: "/all-articles",
+    label: "All Articles",
+    roles: ["user", "admin", "guest"],
+  },
+  { path: "/dashboard", label: "Dashboard", roles: ["admin"] },
+  { path: "/subscription", label: "Subscription", roles: ["user"] },
+];
