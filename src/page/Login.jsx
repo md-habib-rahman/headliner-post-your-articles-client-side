@@ -1,11 +1,18 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import loginAnimation from "../assets/lottie login.json";
 import { PrimaryButton, SecondaryLink } from "../components/Buttons";
 import { useForm } from "react-hook-form";
 import HeadlinerLogo from "../components/HeadlinerLogo";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+import SocialButtons from "../components/SocialButtons";
+import axiosInstance from "../api/axiosInstance";
 
 export default function Login() {
+  const { user, registerWithEmail, LoginWithEmail, signInWithGoogle } =
+    useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -14,7 +21,61 @@ export default function Login() {
 
   const onSubmit = (data) => {
     console.log(data);
-    // Handle authentication logic here
+    LoginWithEmail(data.email, data.password)
+      .then((res) => {
+        if (res.user) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Logged in successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+   
+  };
+
+  //save user info to db usig api function
+  const saveUserToBackend = async (userData) => {
+    const response = await axiosInstance.post("/users", userData);
+    return response.data;
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then(async (result) => {
+        const userInfo = {
+          email: result.user.email,
+          name: result.user.displayName,
+          role: "user",
+          createdAt: new Date().toISOString(),
+        };
+        const updateUserData = await saveUserToBackend(userInfo);
+        if (updateUserData) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login completed successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   return (
@@ -55,16 +116,6 @@ export default function Login() {
                 placeholder="Enter your password"
                 {...register("password", {
                   required: "Password is required",
-                  minLength: { value: 6, message: "Minimum 6 characters" },
-                  validate: {
-                    hasUpper: (v) =>
-                      /[A-Z]/.test(v) || "Must include an uppercase letter",
-                    hasNumber: (v) =>
-                      /[0-9]/.test(v) || "Must include a number",
-                    hasSpecial: (v) =>
-                      /[!@#$%^&*]/.test(v) ||
-                      "Must include a special character",
-                  },
                 })}
                 className="input input-bordered w-full"
               />
@@ -89,6 +140,8 @@ export default function Login() {
               </Link>
             </p>
           </form>
+          <div className="divider">OR</div>
+          <SocialButtons handleGoogleSignIn={handleGoogleSignIn} />
         </div>
       </div>
     </div>

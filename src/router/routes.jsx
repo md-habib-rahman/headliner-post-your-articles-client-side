@@ -5,6 +5,8 @@ import ErrorPage from "../page/ErrorPage";
 import Home from "../page/Home";
 import Login from "../page/Login";
 import Register from "../page/Register";
+import PrivateRoute from "./PrivateRoute";
+import MyProfile from "../page/MyProfile";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +16,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "/user-profile",
+        element: (
+          <PrivateRoute>
+            <MyProfile></MyProfile>
+          </PrivateRoute>
+        ),
       },
     ],
   },

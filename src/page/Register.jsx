@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import registerAnimation from "../assets/registration lottie.json";
 import Lottie from "lottie-react";
 import { useForm } from "react-hook-form";
@@ -7,10 +7,15 @@ import HeadlinerLogo from "../components/HeadlinerLogo";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import axiosInstance from "../api/axiosInstance";
+import axios from "axios";
+import SocialButtons from "../components/SocialButtons";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { user, registerWithEmail } = useAuth();
+  //   const [profileImage, setProfileImage] = useState("");
+  const { user, registerWithEmail, updateUserProfile, signInWithGoogle } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -18,29 +23,99 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    registerWithEmail(data.email, data.password)
-      .then((res) => {
-        if (res.user) {
+  //imgbb Image upload function
+  const uploadImageToImgbb = async (imageFile) => {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    const imgbbUrl = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_imgbbApiKey
+    }`;
+
+    const response = await axios.post(imgbbUrl, formData);
+    // console.log(response.data.data.url);
+    return response.data.data.url;
+  };
+
+  //save user info to db usig api function
+  const saveUserToBackend = async (userData) => {
+    const response = await axiosInstance.post("/users", userData);
+    return response.data;
+  };
+
+  const onSubmit = async (data) => {
+    const { name, email, password, image } = data;
+    const userInfo = {
+      name,
+      email,
+      role: "user",
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      //register user to firebase
+      const userCredential = await registerWithEmail(email, password);
+
+      //update userinfo in the database
+      const updateUserData = await saveUserToBackend(userInfo);
+
+      //upload image to imgbb
+      const imgbbUrl = await uploadImageToImgbb(image[0]);
+      console.log(imgbbUrl);
+      //update user info firebase
+      const userProfileForFirebase = {
+        displayName: name,
+        photoURL: imgbbUrl,
+      };
+      updateUserProfile(userProfileForFirebase)
+        .then(() => {
+          console.log("Profile updated to firebase");
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+      navigate("/");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Registration completed successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: error.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then(async (result) => {
+        const userInfo = {
+          email: result.user.email,
+          name: result.user.displayName,
+          role: "user",
+          createdAt: new Date().toISOString(),
+        };
+        const updateUserData = await saveUserToBackend(userInfo);
+        if (updateUserData) {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Registered successfully!",
+            title: "Registration completed successfully",
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate("/");
         }
+        navigate("/");
       })
       .catch((error) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: error.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        console.log(error.message);
       });
   };
   const password = watch("password", "");
@@ -77,7 +152,23 @@ const Register = () => {
                 <p className="text-error text-sm mt-1">{errors.name.message}</p>
               )}
             </div>
-
+            {/* image upload here */}
+            <div>
+              <label className="block mb-1 font-medium">Profile Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                {...register("image", {
+                  required: "Profile image is required",
+                })}
+                className="file-input file-input-bordered w-full"
+              />
+              {errors.image && (
+                <p className="text-error text-sm mt-1">
+                  {errors.image.message}
+                </p>
+              )}
+            </div>
             <div>
               <label className="block mb-1 font-medium">Email</label>
               <input
@@ -92,7 +183,6 @@ const Register = () => {
                 </p>
               )}
             </div>
-
             <div>
               <label className="block mb-1 font-medium">Password</label>
               <input
@@ -116,7 +206,6 @@ const Register = () => {
                 </p>
               )}
             </div>
-
             <div>
               <label className="block mb-1 font-medium">Confirm Password</label>
               <input
@@ -135,11 +224,9 @@ const Register = () => {
                 </p>
               )}
             </div>
-
             <PrimaryButton type="submit" className="w-full">
               Register
             </PrimaryButton>
-
             <p className="text-sm text-base-content mt-4 text-center">
               Already have an account?{" "}
               <Link to="/auth/login" className="text-secondary border-b-1">
@@ -147,6 +234,8 @@ const Register = () => {
               </Link>
             </p>
           </form>
+          <div className="divider">OR</div>
+          <SocialButtons handleGoogleSignIn={handleGoogleSignIn} />
         </div>
       </div>
     </div>

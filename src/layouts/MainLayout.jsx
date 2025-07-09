@@ -1,13 +1,21 @@
 import React from "react";
 import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import useAuth from "../hooks/useAuth";
 
 const MainLayout = () => {
+  const { user, loading } = useAuth();
+  if (loading) {
+    return (
+      <span className="loading loading-dots loading-xl flex items-center justify-center min-h-screen mx-auto"></span>
+    );
+  }
   return (
     <div>
       <Navbar />
       <Outlet />
-      <h1>Footer</h1>
+      <Footer />
     </div>
   );
 };

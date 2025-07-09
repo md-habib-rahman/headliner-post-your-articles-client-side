@@ -13,11 +13,15 @@ import {
   SecondaryLink,
 } from "./Buttons";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+import Loader from "./Loader";
+import useUserRole from "../hooks/useUserRole";
 
 const Navbar = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, logOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { role, isLoading, error } = useUserRole();
+console.log(role)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const [isDark, setIsDark] = useState(false);
@@ -33,85 +37,41 @@ const Navbar = () => {
     setIsDark(!isDark);
   };
 
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "You have been loged out!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+
   //   const userRole = userRole ? (userRole ? 'admin' : 'user') : 'guest';
-  const userRole = "guest";
-  //   const navLinks = (
-  //     <>
-  //       <NavLink
-  //         to="/"
-  //         className={({ isActive }) =>
-  //           isActive
-  //             ? "block text-primary font-semibold border-b-2"
-  //             : "block hover:text-primary"
-  //         }
-  //       >
-  //         Home{" "}
-  //       </NavLink>
-  //       <NavLink
-  //         to="/add-articles"
-  //         className={({ isActive }) =>
-  //           isActive
-  //             ? "block text-primary font-semibold"
-  //             : "block hover:text-primary"
-  //         }
-  //       >
-  //         Add Articles{" "}
-  //       </NavLink> <NavLink
-  //         to="/add-articles"
-  //         className={({ isActive }) =>
-  //           isActive
-  //             ? "block text-primary font-semibold"
-  //             : "block hover:text-primary"
-  //         }
-  //       >
-  //         Add Articles{" "}
-  //       </NavLink> <NavLink
-  //         to="/add-articles"
-  //         className={({ isActive }) =>
-  //           isActive
-  //             ? "block text-primary font-semibold"
-  //             : "block hover:text-primary"
-  //         }
-  //       >
-  //         Add Articles{" "}
-  //       </NavLink> <NavLink
-  //         to="/add-articles"
-  //         className={({ isActive }) =>
-  //           isActive
-  //             ? "block text-primary font-semibold"
-  //             : "block hover:text-primary"
-  //         }
-  //       >
-  //         Add Articles{" "}
-  //       </NavLink> <NavLink
-  //         to="/add-articles"
-  //         className={({ isActive }) =>
-  //           isActive
-  //             ? "block text-primary font-semibold"
-  //             : "block hover:text-primary"
-  //         }
-  //       >
-  //         Add Articles{" "}
-  //       </NavLink> <NavLink
-  //         to="/add-articles"
-  //         className={({ isActive }) =>
-  //           isActive
-  //             ? "block text-primary font-semibold"
-  //             : "block hover:text-primary"
-  //         }
-  //       >
-  //         Add Articles{" "}
-  //       </NavLink>
-  //     </>
-  //   );
+  //   const userRole = "guest";
+//   if (loading) {
+//     return <Loader />;
+//   }
   return (
-    <div className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-base-100/60 border-b border-base-300 shadow-md">
+    <div className="w-full z-50 backdrop-blur-lg bg-base-100/60 border-b border-base-300 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
         <HeadlinerLogo theme={isDark} />
 
         <div className="hidden md:flex space-x-6 items-center">
           {navLinks
-            .filter((link) => link.roles.includes(userRole))
+            .filter((link) => link.roles.includes(role))
             .map((link) => (
               <NavLink
                 key={link.path}
@@ -125,14 +85,42 @@ const Navbar = () => {
             ))}
           {user ? (
             <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <label
+                tabIndex={0}
+                className="btn btn-ghost btn-circle avatar hover:scale-110 transition-transform duration-200"
+              >
                 <div className="w-8 rounded-full">
                   <img
-                    src="https://i.ibb.co/ZYW3VTp/brown-brim.png"
+                    src={
+                      user?.photoURL
+                        ? user?.photoURL
+                        : "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
+                    }
                     alt="User"
                   />
                 </div>
               </label>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary/50 rounded-box w-52 "
+              >
+                <li>
+                  <Link
+                    to="user-profile"
+                    className="justify-between text-lg bg-secondary/60 mb-1.5 hover:scale-102 transition-all"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="text-lg bg-secondary/60 hover:scale-102 transition-all"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
             </div>
           ) : (
             <>
@@ -186,7 +174,7 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-base-100/80 backdrop-blur-lg p-4 space-y-3 flex flex-col mx-4">
           {navLinks
-            .filter((link) => link.roles.includes(userRole))
+            .filter((link) => link.roles.includes(role))
             .map((link) => (
               <NavLink
                 key={link.path}
