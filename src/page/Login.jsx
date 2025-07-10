@@ -43,7 +43,6 @@ export default function Login() {
           timer: 1500,
         });
       });
-   
   };
 
   //save user info to db usig api function
@@ -59,18 +58,19 @@ export default function Login() {
           email: result.user.email,
           name: result.user.displayName,
           role: "user",
+          photoURL: result.user.photoURL,
           createdAt: new Date().toISOString(),
         };
         const updateUserData = await saveUserToBackend(userInfo);
-        if (updateUserData) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Login completed successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: updateUserData.success ? "Login Successfully" : "Welcome Back",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+       
         navigate("/");
       })
       .catch((error) => {

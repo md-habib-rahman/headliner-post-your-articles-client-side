@@ -11,14 +11,14 @@ const useUserRole = () => {
     queryKey: ["userRole", user?.email],
     queryFn: async () => {
       const response = await axiosInstance.get(`/user/role/${user.email}`);
-	  
+
       return response.data.role;
     },
     enabled: !!user && !loading,
   });
-// console.log(data)
-  const role = data;
-  
+  // console.log(data)
+  const role = data ? data : "guest";
+
   return { role, error, isLoading };
 };
 

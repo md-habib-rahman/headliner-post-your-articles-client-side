@@ -45,23 +45,25 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     const { name, email, password, image } = data;
-    const userInfo = {
-      name,
-      email,
-      role: "user",
-      createdAt: new Date().toISOString(),
-    };
 
     try {
       //register user to firebase
       const userCredential = await registerWithEmail(email, password);
 
-      //update userinfo in the database
-      const updateUserData = await saveUserToBackend(userInfo);
-
       //upload image to imgbb
       const imgbbUrl = await uploadImageToImgbb(image[0]);
       console.log(imgbbUrl);
+      const userInfo = {
+        name,
+        email,
+        role: "user",
+        photoURL: imgbbUrl,
+        createdAt: new Date().toISOString(),
+      };
+
+      //update userinfo in the database
+      const updateUserData = await saveUserToBackend(userInfo);
+
       //update user info firebase
       const userProfileForFirebase = {
         displayName: name,
@@ -100,18 +102,18 @@ const Register = () => {
           email: result.user.email,
           name: result.user.displayName,
           role: "user",
+          photoURL: result.user.photoURL,
           createdAt: new Date().toISOString(),
         };
         const updateUserData = await saveUserToBackend(userInfo);
-        if (updateUserData) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Registration completed successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: updateUserData.success ? "Login Successfully" : "Welcome Back",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
         navigate("/");
       })
       .catch((error) => {

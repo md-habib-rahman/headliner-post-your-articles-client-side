@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { navLinks } from "./NavLinks";
+
 import HeadlinerLogo from "./HeadlinerLogo";
 import { HiOutlineMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
@@ -16,12 +16,13 @@ import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import Loader from "./Loader";
 import useUserRole from "../hooks/useUserRole";
+import { navLinks } from "./NavLinks";
 
 const Navbar = () => {
   const { user, loading, logOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { role, isLoading, error } = useUserRole();
-console.log(role)
+  console.log(role);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const [isDark, setIsDark] = useState(false);
@@ -61,9 +62,9 @@ console.log(role)
 
   //   const userRole = userRole ? (userRole ? 'admin' : 'user') : 'guest';
   //   const userRole = "guest";
-//   if (loading) {
-//     return <Loader />;
-//   }
+  //   if (loading) {
+  //     return <Loader />;
+  //   }
   return (
     <div className="w-full z-50 backdrop-blur-lg bg-base-100/60 border-b border-base-300 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">

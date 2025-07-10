@@ -7,6 +7,11 @@ import Login from "../page/Login";
 import Register from "../page/Register";
 import PrivateRoute from "./PrivateRoute";
 import MyProfile from "../page/MyProfile";
+import AddArticles from "../page/AddArticles";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../page/dashboardPages/Dashboard";
+import AllUsers from "../page/dashboardPages/AllUsers";
+import AllArticles from "../page/dashboardPages/AllArticles";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +30,14 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/add-articles",
+        element: (
+          <PrivateRoute>
+            <AddArticles />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
@@ -39,6 +52,22 @@ export const router = createBrowserRouter([
         path: "registration",
         Component: Register,
       },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        Component: Dashboard,
+      },
+      { path: "all-users", Component: AllUsers },
+      { path: "all-articles", Component: AllArticles },
     ],
   },
   {

@@ -11,7 +11,7 @@ export const PrimaryButton = ({
     <button
       type={type}
       onClick={onClick}
-      className={`px-6 py-2 rounded-xl shadow-md bg-primary text-primary-content font-semibold hover:bg-primary/90 transition duration-200 ${className}`}
+      className={`px-6 py-2 rounded-xl shadow-md bg-primary text-primary-content font-semibold hover:bg-primary/90 transition duration-200 btn ${className}`}
     >
       {children}
     </button>
