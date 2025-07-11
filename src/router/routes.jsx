@@ -12,6 +12,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../page/dashboardPages/Dashboard";
 import AllUsers from "../page/dashboardPages/AllUsers";
 import AllArticles from "../page/dashboardPages/AllArticles";
+import AddPublisher from "../page/dashboardPages/AddPublisher";
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,7 @@ export const router = createBrowserRouter([
       },
       { path: "all-users", Component: AllUsers },
       { path: "all-articles", Component: AllArticles },
+      { path: "add-publisher", Component: AddPublisher },
     ],
   },
   {

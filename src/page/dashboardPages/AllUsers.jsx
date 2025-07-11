@@ -6,7 +6,7 @@ import axios from "axios";
 import { PrimaryButton } from "../../components/Buttons";
 import useAuth from "../../hooks/useAuth";
 
-const AllUsers = () => {
+const AllArticles = () => {
   const { user: currentUser } = useAuth();
   // Fetch Users
   const {
@@ -113,4 +113,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default AllArticles;

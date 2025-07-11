@@ -22,13 +22,13 @@ export const SecondaryButton = ({
   children,
   onClick,
   type = "button",
-  className = "",
+  className,
 }) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`px-6 py-2 rounded-xl border border-secondary text-secondary hover:bg-secondary hover:text-secondary-content font-medium transition duration-200 ${className}`}
+      className={`px-6 py-2 rounded-xl border border-secondary text-secondary hover:bg-secondary hover:text-secondary-content font-medium transition duration-200 btn ${className}`}
     >
       {children}
     </button>

@@ -7,9 +7,21 @@ import axiosInstance from "../api/axiosInstance";
 import { tags } from "../js/tags";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
 export default function AddArticles() {
-  //   console.log(tags);
+  const {
+    data: publishers = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["publishers"],
+    queryFn: async () => {
+      const res = await axiosInstance.get("/publishers");
+      return res.data;
+    },
+  });
+  //   console.log(publishers);
 
   const { user } = useAuth();
   const {
@@ -36,26 +48,33 @@ export default function AddArticles() {
 
   const onSubmit = async (data) => {
     const { title, description, publisher, tags, image } = data;
+    const initialStatus = [
+      { isApprove: false },
+      { isDecline: null },
+      { declineMessage: null },
+    ];
 
     try {
       const tag = tags.map((item) => item.value);
       //   console.log(tag);
       const imageUrl = await uploadImageToImgbb(image[0]);
-    //   console.log(imageUrl);
+      //   console.log(imageUrl);
       const articleData = {
         title,
         description,
         publisher,
         tags: tag,
         imageUrl,
-        isApprove: false,
+        // isApprove: false,
+        approvalStatus: initialStatus,
         isPremium: false,
-        cratedBy: user?.email,
+        createdBy: user?.email,
         createdAt: new Date().toISOString(),
       };
+      console.log(articleData);
 
       const response = await axiosInstance.post("/articles", articleData);
-      //   console.log(articleData);
+      console.log(articleData);
       if (response.status === 200) {
         Swal.fire({
           position: "top-end",
@@ -87,7 +106,7 @@ export default function AddArticles() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-100 px-4">
+    <div className="py-12 flex items-center justify-center bg-base-100 px-4">
       <div className="max-w-4xl w-full bg-white dark:bg-base-200 rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-primary mb-4 text-center font-montserrat">
           Add New Article
@@ -125,12 +144,20 @@ export default function AddArticles() {
 
           <div>
             <label className="block mb-1 font-medium">Publisher</label>
-            <input
-              type="text"
-              placeholder="Enter publisher name"
-              {...register("publisher", { required: "Publisher is required" })}
-              className="input input-bordered w-full"
-            />
+            <select
+              {...register("publisher", { required: true })}
+              className="select select-bordered w-full"
+              defaultValue=""
+            >
+              <option disabled value="">
+                -- Select Publisher --
+              </option>
+              {publishers.map((pub) => (
+                <option key={pub._id} value={pub.name}>
+                  {pub.name}
+                </option>
+              ))}
+            </select>
             {errors.publisher && (
               <p className="text-error text-sm mt-1">
                 {errors.publisher.message}
