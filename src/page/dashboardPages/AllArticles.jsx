@@ -182,7 +182,7 @@ const AllArticles = () => {
                       ? "Approved"
                       : "Not Approved"}
                   </p>
-                  <p>{article?.approvalStatus?.[1]?.isDecline && "Declined"}</p>
+                  <p className="badge badge-error">{article?.approvalStatus?.[1]?.isDecline && "Declined"}</p>
                 </td>
                 <td>{article?.publisher}</td>
                 <td>

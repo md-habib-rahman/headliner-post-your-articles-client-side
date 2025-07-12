@@ -1,8 +1,14 @@
-import { FaRegNewspaper, FaTachometerAlt, FaUserPlus, FaUsers } from "react-icons/fa";
+import {
+  FaRegNewspaper,
+  FaTachometerAlt,
+  FaUserPlus,
+  FaUsers,
+} from "react-icons/fa";
 
 export const navLinks = [
   { path: "/", label: "Home", roles: ["guest", "user", "admin"] },
   { path: "/add-articles", label: "Add Articles", roles: ["user", "admin"] },
+  { path: "/my-articles", label: "My Articles", roles: ["user", "admin"] },
   {
     path: "/all-articles",
     label: "All Articles",

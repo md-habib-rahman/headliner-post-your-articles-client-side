@@ -13,6 +13,7 @@ import Dashboard from "../page/dashboardPages/Dashboard";
 import AllUsers from "../page/dashboardPages/AllUsers";
 import AllArticles from "../page/dashboardPages/AllArticles";
 import AddPublisher from "../page/dashboardPages/AddPublisher";
+import MyArticles from "../page/MyArticle";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddArticles />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-articles",
+        element: (
+          <PrivateRoute>
+            <MyArticles />
           </PrivateRoute>
         ),
       },
