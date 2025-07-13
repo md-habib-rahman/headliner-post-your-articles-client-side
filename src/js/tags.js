@@ -21,4 +21,6 @@ export const tags = [
   { value: "school	", label: "School" },
   { value: "news", label: "News" },
   { value: "International", label: "International" },
+  { value: "entertainment", label: "Entertainment" },
+  { value: "accident", label: "Accident" },
 ];

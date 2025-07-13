@@ -48,11 +48,11 @@ export default function AddArticles() {
 
   const onSubmit = async (data) => {
     const { title, description, publisher, tags, image } = data;
-    const initialStatus = [
-      { isApprove: false },
-      { isDecline: null },
-      { declineMessage: null },
-    ];
+    const initialStatus = {
+      isApprove: null,
+      isDecline: null,
+      declineMessage: null,
+    };
 
     try {
       const tag = tags.map((item) => item.value);
@@ -84,6 +84,7 @@ export default function AddArticles() {
           timer: 1500,
         });
         reset();
+        setImagePreview(null);
       }
     } catch (error) {
       Swal.fire({
@@ -177,7 +178,7 @@ export default function AddArticles() {
               }}
               render={({ field }) => (
                 <Select
-                  {...field} // Make react-select controlled by react-hook-form
+                  {...field}
                   isMulti
                   options={tags}
                   className="react-select-container"

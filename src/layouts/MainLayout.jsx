@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import useAuth from "../hooks/useAuth";
+import Aos from "aos";
 
 const MainLayout = () => {
+  useEffect(() => {
+    Aos.init({
+      duration: 700,
+    });
+  }, []);
+
   const { user, loading } = useAuth();
   if (loading) {
     return (

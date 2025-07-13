@@ -73,7 +73,19 @@ const AllArticles = () => {
     refetch();
   };
 
-  const handleMakePremium = () => {
+  const handleMakePremium = async (id) => {
+    console.log("button clicked");
+    const resutl = await axiosInstance.patch(`/make-premium/${id}`);
+    if (resutl.data.modifiedCount === 1) {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Article converted to premium!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      refetch();
+    }
     // console.log("Make Premium button clicked");
   };
   const handleApprove = async (id) => {
@@ -91,7 +103,7 @@ const AllArticles = () => {
         const response = await axiosInstance.patch(
           `/article/allow-approval/${id}`
         );
-        if (response.data.success) {
+        if (response.data) {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -118,10 +130,10 @@ const AllArticles = () => {
   const handleDecline = (article) => {
     setSelectedArticleId(article._id);
     setModalOpen(true);
-    console.log("clicked");
+    // console.log("clicked");
   };
 
-  console.log(articles[0]?.approvalStatus);
+  //   console.log(articles[0]?.approvalStatus);
 
   //    Swal.fire({
   //             position: "top-end",
@@ -137,7 +149,7 @@ const AllArticles = () => {
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4 font-montserrat">All Articles</h2>
 
-      <div className="overflow-x-auto">
+      <div className="">
         <table className="table table-zebra w-full">
           <thead>
             <tr>
@@ -156,7 +168,9 @@ const AllArticles = () => {
               <tr key={article._id}>
                 <td>{idx + 1}</td>
                 <td>
-                  <p className="w-xs font-semibold">{article.title}</p>
+                  <p className="lg:w-[150px] xl:w-[200px] font-semibold">
+                    {article.title}
+                  </p>
                 </td>
                 <td>
                   <div className="avatar">
@@ -170,7 +184,7 @@ const AllArticles = () => {
                   <span className="font-semibold">
                     {article?.articleWithUserInfo?.name}
                   </span>
-                  <span className="badge badge-soft badge-success text-xs">
+                  <span className="badge badge-soft badge-success text-xs mt-1">
                     {article?.articleWithUserInfo?.email}
                   </span>
                 </td>
@@ -178,11 +192,13 @@ const AllArticles = () => {
                 <td>{new Date(article?.createdAt).toLocaleString()}</td>
                 <td>
                   <p>
-                    {article?.approvalStatus?.[0]?.isApprove
+                    {article?.approvalStatus?.isApprove
                       ? "Approved"
                       : "Not Approved"}
                   </p>
-                  <p className="badge badge-error">{article?.approvalStatus?.[1]?.isDecline && "Declined"}</p>
+                  <p className="bg-red-500 text-center rounded-2xl text-base-100 text-xs mt-1">
+                    {article?.approvalStatus?.isDecline && "Declined"}
+                  </p>
                 </td>
                 <td>{article?.publisher}</td>
                 <td>
@@ -192,7 +208,7 @@ const AllArticles = () => {
                         className="btn rounded-xl"
                         onClick={() => handleApprove(article._id)}
                       >
-                        <FaCheckCircle size={20} />
+                        <FaCheckCircle />
                       </button>
                     </div>
                     <div className="tooltip" data-tip="Decline">
@@ -200,7 +216,7 @@ const AllArticles = () => {
                         className="btn rounded-xl"
                         onClick={() => handleDecline(article)}
                       >
-                        <FaTimesCircle size={20} />
+                        <FaTimesCircle />
                       </button>
                     </div>
                     <div className="tooltip" data-tip="Delete">
@@ -208,16 +224,17 @@ const AllArticles = () => {
                         className="btn rounded-xl"
                         onClick={() => handleDelete(article._id)}
                       >
-                        <FaTrashAlt size={20} />
+                        <FaTrashAlt />
                       </button>
                     </div>
                     <div className="tooltip" data-tip="Make Premium">
                       <button
+                        onClick={() => handleMakePremium(article._id)}
                         className={`${
                           article.isPremium && "btn-disabled"
                         } btn rounded-xl`}
                       >
-                        <FaCrown size={20} className="text-secondary" />
+                        <FaCrown className="text-secondary" />
                       </button>
                     </div>
                   </div>

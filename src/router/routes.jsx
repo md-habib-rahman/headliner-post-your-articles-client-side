@@ -14,6 +14,9 @@ import AllUsers from "../page/dashboardPages/AllUsers";
 import AllArticles from "../page/dashboardPages/AllArticles";
 import AddPublisher from "../page/dashboardPages/AddPublisher";
 import MyArticles from "../page/MyArticle";
+import ArticleDetails from "../page/ArticleDetails";
+import UpdateArticle from "../page/UpdateArticle";
+import AllArticle from "../page/AllArticle";
 
 export const router = createBrowserRouter([
   {
@@ -25,13 +28,34 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/user-profile",
+        path: "all-articles",
+        Component: AllArticle,
+      },
+      {
+        path: "user-profile",
         element: (
           <PrivateRoute>
             <MyProfile></MyProfile>
           </PrivateRoute>
         ),
       },
+      {
+        path: "article-details/:id",
+        element: (
+          <PrivateRoute>
+            <ArticleDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "update-article",
+        element: (
+          <PrivateRoute>
+            <UpdateArticle />
+          </PrivateRoute>
+        ),
+      },
+
       {
         path: "/add-articles",
         element: (

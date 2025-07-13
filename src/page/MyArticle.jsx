@@ -4,9 +4,12 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../api/axiosInstance";
 import useAuth from "../hooks/useAuth";
 import { FiInfo, FiEdit } from "react-icons/fi";
-import { MdDeleteForever, MdOutlineNotes } from "react-icons/md";
+import { MdCancel, MdDeleteForever, MdOutlineNotes } from "react-icons/md";
 import { RiChatDeleteLine } from "react-icons/ri";
 import DeclineMessageModal from "./DeclineMessageModal";
+import Swal from "sweetalert2";
+import { GrValidate } from "react-icons/gr";
+import { BsClock } from "react-icons/bs";
 
 const MyArticle = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,32 +32,52 @@ const MyArticle = () => {
   });
 
   const handleDetailsClick = (id) => {
-    navigate(`/article/${id}`);
+    navigate(`/article-details/${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await axiosInstance.delete(`/articles/${id}`);
-      if (response.status === 200) {
-        alert("Article deleted successfully");
-        // Refresh the list of articles
+      const alert = await Swal.fire({
+        title: "Are you sure?",
+        text: "This will permanently delete the article!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "red",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (alert.isConfirmed) {
+        const response = await axiosInstance.delete(
+          `/my-articles/delete/${id}`
+        );
+        if (response.data.success) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Article deleted successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }
+      refetch();
     } catch (error) {
-      console.error("❌ Error deleting article:", error);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: error.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
-  const handleUpdate = (id) => {
-    navigate(`/update-article/${id}`);
+  const handleUpdate = (article) => {
+    navigate(`/update-article`, { state: { article: article } });
   };
 
   const openModal = (reason) => {
     setDeclineReason(reason);
     setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -81,24 +104,30 @@ const MyArticle = () => {
             articles.map((article, index) => (
               <tr key={article._id}>
                 <td>{index + 1}</td>
-                <td>{article.title}</td>
                 <td>
-                  {article.approvalStatus[0].isApprove === true ? (
-                    "Approved"
-                  ) : article.approvalStatus[1].isDecline === true ? (
-                    <span>
-                      Declined
+                  <p className="font-semibold">{article.title}</p>
+                </td>
+                <td>
+                  {article.approvalStatus?.isApprove === true ? (
+                    <span className="flex items-center gap-1 text-green-600">
+                      Approve <GrValidate />
+                    </span>
+                  ) : article.approvalStatus?.isDecline === true ? (
+                    <span className="flex items-center gap-1 text-red-600">
+                      Declined <MdCancel />
                       <button
                         className="btn btn-xs btn-error ml-2"
                         onClick={() =>
-                          openModal(article.approvalStatus[2].declineMessage)
+                          openModal(article.approvalStatus?.declineMessage)
                         }
                       >
                         View Reason <RiChatDeleteLine />
                       </button>
                     </span>
                   ) : (
-                    "Pending"
+                    <span className="flex items-center gap-1 text-gray-500">
+                      Pending <BsClock />
+                    </span>
                   )}
                 </td>
                 <td>{article.isPremium ? "Yes" : "No"}</td>
@@ -111,7 +140,7 @@ const MyArticle = () => {
                   </button>
                   <button
                     className="btn btn-warning btn-sm mr-2"
-                    onClick={() => handleUpdate(article._id)}
+                    onClick={() => handleUpdate(article)}
                   >
                     Update <FiEdit />
                   </button>
