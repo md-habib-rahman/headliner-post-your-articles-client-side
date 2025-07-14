@@ -8,28 +8,27 @@ import {
 export const navLinks = [
   { path: "/", label: "Home", roles: ["guest", "user", "admin", "premium"] },
   {
-    path: "/add-articles",
-    label: "Add Articles",
-    roles: ["user", "admin", "premium"],
-  },
-
-  {
     path: "/all-articles",
     label: "All Articles",
     roles: ["user", "admin", "guest", "premium"],
   },
   {
-    path: "/subscription",
-    label: "Subscription",
-    roles: ["user", "admin", "guest"],
+    path: "/add-articles",
+    label: "Add Articles",
+    roles: ["user", "admin", "premium"],
   },
-  { path: "/dashboard", label: "Dashboard", roles: ["admin"] },
   {
     path: "/my-articles",
     label: "My Articles",
     roles: ["user", "admin", "premium"],
   },
   { path: "/premium-articles", label: "Premium Articles", roles: ["premium"] },
+  { path: "/dashboard", label: "Dashboard", roles: ["admin"] },
+  {
+    path: "/subscription",
+    label: "Subscription",
+    roles: ["user", "admin", "guest"],
+  },
 ];
 
 export const adminLinks = [
