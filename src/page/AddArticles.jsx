@@ -10,6 +10,7 @@ import useAuth from "../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 
 export default function AddArticles() {
+  const { user } = useAuth();
   const {
     data: publishers = [],
     isLoading,
@@ -21,9 +22,9 @@ export default function AddArticles() {
       return res.data;
     },
   });
+
   //   console.log(publishers);
 
-  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -76,7 +77,7 @@ export default function AddArticles() {
 
       const response = await axiosInstance.post("/articles", articleData);
       console.log(articleData);
-      if (response.status === 200) {
+      if (response.data.success) {
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -86,6 +87,14 @@ export default function AddArticles() {
         });
         reset();
         setImagePreview(null);
+      } else {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "You are not allowed to post any article!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       Swal.fire({

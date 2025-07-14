@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router";
 import HeadlinerLogo from "./HeadlinerLogo";
 import { HiOutlineMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaCrown, FaMoon, FaSun } from "react-icons/fa";
 import { FiSun } from "react-icons/fi";
 import {
   PrimaryButton,
@@ -78,10 +78,19 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={({ isActive }) =>
-                  isActive ? "text-primary font-semibold" : "hover:text-primary"
+                  `${
+                    link.label === "Subscription"
+                      ? "bg-secondary px-4 rounded-2xl py-1 flex items-center gap-2 text-white "
+                      : ""
+                  }${
+                    isActive
+                      ? "text-primary font-semibold"
+                      : "hover:text-primary"
+                  }`
                 }
               >
                 {link.label}
+                {link.label === "Subscription" && <FaCrown />}
               </NavLink>
             ))}
           {user ? (
