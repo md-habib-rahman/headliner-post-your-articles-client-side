@@ -68,6 +68,7 @@ export default function AddArticles() {
         // isApprove: false,
         approvalStatus: initialStatus,
         isPremium: false,
+        viewCount: 0,
         createdBy: user?.email,
         createdAt: new Date().toISOString(),
       };

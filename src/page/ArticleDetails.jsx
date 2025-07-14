@@ -1,10 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { useParams } from "react-router";
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router";
 import axiosInstance from "../api/axiosInstance";
 
 const ArticleDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
+
+  useEffect(() => {
+    const previousRoute = location.state?.from;
+
+    if (previousRoute === "allArticlesPublic") {
+      console.log("Counte Updated");
+      axiosInstance.patch(`/article/update-view/${id}`).catch((error) => {
+        console.log(error);
+      });
+    }
+  }, [id, location]);
 
   const {
     data: article,
@@ -23,14 +35,14 @@ const ArticleDetails = () => {
     return <div className="text-center p-8">Error loading article</div>;
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <div className="bg-white dark:bg-base-300 p-6 rounded-lg shadow-lg mb-6">
+    <div className="max-w-5xl mx-auto p-6">
+      <div className="bg-base-300 p-6 rounded-lg shadow-lg mb-6">
         <h2 className="text-3xl font-bold text-primary mb-4">
           {article.title}
         </h2>
         <div className="flex justify-between text-sm text-base-content mb-4">
-          <span>{article.publisher}</span>
-          <span>Published: {new Date(article.createdAt).toLocaleString()}</span>
+          <span className="font-semibold text-xl text-neutral-500">{article.publisher}</span>
+          <span className="text-neutral-500">Published: {new Date(article.createdAt).toLocaleString()}</span>
         </div>
 
         <img
@@ -42,14 +54,25 @@ const ArticleDetails = () => {
           <h3 className="text-xl font-semibold text-primary mb-2">Tags:</h3>
           <div className="flex space-x-2">
             {article.tags.map((tag, index) => (
-              <span key={index} className="badge badge-outline  badge-success text-sm">
+              <span
+                key={index}
+                className="badge badge-outline  badge-success text-sm"
+              >
                 {tag}
               </span>
             ))}
           </div>
         </div>
+		<div className="mt-4">
+			<span className="italic text-neutral-400 flex gap-2">
+				Article Written by:<p className="not-italic badge badge-secondary badge-outline">{article.createdBy}</p>
+			</span>
+			
+		</div>
         <div className="text-base-content mt-6">
-          <p>{article.description}</p>
+          {article.description.split("\n").map((line, index) => (
+            <p key={index} className="mb-4 max-w-3xl mx-auto">{line}</p>
+          ))}
         </div>
       </div>
     </div>

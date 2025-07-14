@@ -32,7 +32,7 @@ const MyArticle = () => {
   });
 
   const handleDetailsClick = (id) => {
-    navigate(`/article-details/${id}`);
+    navigate(`/article-details/${id}`, { state: { from: "myArticles" } });
   };
 
   const handleDelete = async (id) => {

@@ -11,12 +11,12 @@ import AddArticles from "../page/AddArticles";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../page/dashboardPages/Dashboard";
 import AllUsers from "../page/dashboardPages/AllUsers";
-import AllArticles from "../page/dashboardPages/AllArticles";
 import AddPublisher from "../page/dashboardPages/AddPublisher";
 import MyArticles from "../page/MyArticle";
 import ArticleDetails from "../page/ArticleDetails";
 import UpdateArticle from "../page/UpdateArticle";
-import AllArticle from "../page/AllArticle";
+import AllArticlesPublic from "../page/AllArticlesPublic";
+import AllArticles from "../page/dashboardPages/AllArticles";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-articles",
-        Component: AllArticle,
+        Component: AllArticlesPublic,
       },
       {
         path: "user-profile",

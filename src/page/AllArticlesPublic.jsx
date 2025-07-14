@@ -9,7 +9,7 @@ import { PrimaryButton } from "../components/Buttons";
 import { BiCategoryAlt } from "react-icons/bi";
 import { tags } from "../js/tags";
 
-const AllArticle = () => {
+const AllArticlesPublic = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [search, setSearch] = useState("");
@@ -61,7 +61,7 @@ const AllArticle = () => {
   };
 
   const handleDetails = (id) => {
-    navigate(`/article-details/${id}`);
+    navigate(`/article-details/${id}`, { state: { from: "allArticlesPublic" } });
   };
 
   if (isLoading) return <div className="text-center p-8">Loading...</div>;
@@ -165,4 +165,4 @@ const AllArticle = () => {
   );
 };
 
-export default AllArticle;
+export default AllArticlesPublic;
