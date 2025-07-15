@@ -1,15 +1,22 @@
 import React from "react";
 import { MdFavoriteBorder } from "react-icons/md";
+import "aos/dist/aos.css";
 
 const PaymentCards = () => {
   return (
-    <div className="py-12 px-12 text-center">
-      <h2 className="text-3xl font-bold text-primary mb-4 font-montserrat">
+    <div className="py-18  text-center">
+      <h2
+        className="text-3xl font-bold text-primary  font-montserrat"
+        data-aos="fade-up"
+      >
         Choose Your Plan
       </h2>
+      <p data-aos="fade-up" className="mb-12 text-primary/60">
+        Subscribe now and never miss a breaking story
+      </p>
       <div className="grid grid-cols-1  md:grid-cols-3 gap-6">
         <div
-          data-aos="fade-up"
+          data-aos="fade-right"
           className="bg-base-300 p-6 rounded-lg shadow-lg"
         >
           <h3 className="text-xl font-semibold text-primary mb-2 font-montserrat">
@@ -42,7 +49,7 @@ const PaymentCards = () => {
           <button className="btn btn-primary w-full">Subscribe</button>
         </div>
         <div
-          data-aos="fade-up"
+          data-aos="fade-left"
           className="bg-base-300 p-6 rounded-lg shadow-lg"
         >
           <h3 className="text-xl font-semibold text-primary mb-2 font-montserrat">
