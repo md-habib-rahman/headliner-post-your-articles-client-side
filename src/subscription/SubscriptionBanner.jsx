@@ -1,33 +1,27 @@
 import React from "react";
-import animationData from "../assets/Premium.json";
-import Lottie from "lottie-react";
 import "aos/dist/aos.css";
-import useAuth from "../hooks/useAuth";
+import lottieAnimation from "../assets/news.json";
+import Lottie from "lottie-react";
 
-const SubscriptionBanner = ({ handleSubscription }) => {
+const SubscriptionBanner = () => {
   return (
     <div
-    //   data-aos="flip-left"
-      className="relative bg-neutral text-neutral-content p-12 rounded-lg shadow-lg"
+      className="bg-gradient-to-r from-blue-900 via-purple-800 to-indigo-900 text-white py-12 md:px-20  shadow-2xl  relative md:h-80 lg:h-120 flex items-center justify-center mb-12"
+      data-aos="fade-up"
     >
-      <div className="absolute inset-0 z-0">
-        <Lottie
-          animationData={animationData}
-          loop={true}
-          className="w-full h-full object-cover "
-        />
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="text-center ">
+          <h2 className="text-2xl md:text-5xl font-bold mb-3 font-montserrat">
+            Stay Ahead with the <br />
+            Latest News!
+          </h2>
+          <p className="text-md md:text-lg text-gray-200">
+            Subscribe now and never miss a breaking story. 
+          </p>
+        </div>
       </div>
-      <div className="relative z-10 text-center">
-        <h1 className="text-4xl font-extrabold mb-4">Unlock Premium Content</h1>
-        <p className="text-lg mb-6">
-          Get access to exclusive articles, premium content, and more.
-        </p>
-        <button
-          onClick={handleSubscription}
-          className="btn btn-secondary py-3 px-6 rounded-full"
-        >
-          Subscribe Now
-        </button>
+      <div className="w-full h-full absolute top-0 left-0 overflow-hidden">
+        <Lottie animationData={lottieAnimation} loop={true} speed={0.1} />
       </div>
     </div>
   );

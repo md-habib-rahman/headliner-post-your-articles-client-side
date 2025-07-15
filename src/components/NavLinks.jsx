@@ -27,7 +27,7 @@ export const navLinks = [
   {
     path: "/subscription",
     label: "Subscription",
-    roles: ["user", "admin", "guest"],
+    roles: ["user", "admin", "premium"],
   },
 ];
 

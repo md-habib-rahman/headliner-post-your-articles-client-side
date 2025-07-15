@@ -8,6 +8,7 @@ import { LuCalendarDays } from "react-icons/lu";
 import { PrimaryButton } from "../components/Buttons";
 import { BiCategoryAlt } from "react-icons/bi";
 import { tags } from "../js/tags";
+import useUserRole from "../hooks/useUserRole";
 
 const AllArticlesPublic = () => {
   const navigate = useNavigate();
@@ -17,7 +18,8 @@ const AllArticlesPublic = () => {
   const [searchTag, setSearchTag] = useState("");
   const [articles, setArticles] = useState([]);
   const [debouncedSearch, setDebouncedSearch] = useState("");
-
+  const { role, isLoading: roleLoading, error: roleError } = useUserRole();
+  //   console.log(user);
   const { data, isLoading, isError } = useQuery({
     queryKey: ["allArticles", debouncedSearch, searchPublisher, searchTag],
     queryFn: async () => {
@@ -61,7 +63,9 @@ const AllArticlesPublic = () => {
   };
 
   const handleDetails = (id) => {
-    navigate(`/article-details/${id}`, { state: { from: "allArticlesPublic" } });
+    navigate(`/article-details/${id}`, {
+      state: { from: "allArticlesPublic" },
+    });
   };
 
   if (isLoading) return <div className="text-center p-8">Loading...</div>;
@@ -116,7 +120,11 @@ const AllArticlesPublic = () => {
               key={article._id}
               className={`p-4 rounded-lg shadow-md hover:shadow-lg transition-transform duration-300 flex-grow
 				${iswide ? "basis-full sm:basis-[65%]" : "basis-full sm:basis-[31%]"}
-				${article.isPremium ? "bg-secondary/20" : "bg-base-300"}`}
+				${
+          article.isPremium
+            ? "bg-secondary/20 border-2 border-secondary"
+            : "bg-base-300"
+        }`}
               data-aos="fade-up"
             >
               <img
@@ -145,7 +153,11 @@ const AllArticlesPublic = () => {
                   <PrimaryButton
                     onClick={() => handleDetails(article._id)}
                     to={``}
-                    className={!article.isPremium ? "" : "btn-disabled"}
+                    className={
+                      article.isPremium && role !== "premium"
+                        ? "btn-disabled"
+                        : ""
+                    }
                   >
                     Details
                   </PrimaryButton>

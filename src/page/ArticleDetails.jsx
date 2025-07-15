@@ -10,11 +10,9 @@ const ArticleDetails = () => {
   useEffect(() => {
     const previousRoute = location.state?.from;
 
-    if (previousRoute === "allArticlesPublic") {
-      console.log("Counte Updated");
-      axiosInstance.patch(`/article/update-view/${id}`).catch((error) => {
-        console.log(error);
-      });
+    if (previousRoute === "allArticles") {
+      axiosInstance.patch(`/article/update-view/${id}`);
+      console.log("view updated");
     }
   }, [id, location]);
 
@@ -41,8 +39,12 @@ const ArticleDetails = () => {
           {article.title}
         </h2>
         <div className="flex justify-between text-sm text-base-content mb-4">
-          <span className="font-semibold text-xl text-neutral-500">{article.publisher}</span>
-          <span className="text-neutral-500">Published: {new Date(article.createdAt).toLocaleString()}</span>
+          <span className="font-semibold text-xl text-neutral-500">
+            {article.publisher}
+          </span>
+          <span className="text-neutral-500">
+            Published: {new Date(article.createdAt).toLocaleString()}
+          </span>
         </div>
 
         <img
@@ -63,15 +65,19 @@ const ArticleDetails = () => {
             ))}
           </div>
         </div>
-		<div className="mt-4">
-			<span className="italic text-neutral-400 flex gap-2">
-				Article Written by:<p className="not-italic badge badge-secondary badge-outline">{article.createdBy}</p>
-			</span>
-			
-		</div>
+        <div className="mt-4">
+          <span className="italic text-neutral-400 flex gap-2">
+            Article Written by:
+            <p className="not-italic badge badge-secondary badge-outline">
+              {article.createdBy}
+            </p>
+          </span>
+        </div>
         <div className="text-base-content mt-6">
           {article.description.split("\n").map((line, index) => (
-            <p key={index} className="mb-4 max-w-3xl mx-auto">{line}</p>
+            <p key={index} className="mb-4 max-w-3xl mx-auto">
+              {line}
+            </p>
           ))}
         </div>
       </div>
