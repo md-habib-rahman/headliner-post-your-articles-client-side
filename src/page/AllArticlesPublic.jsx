@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import axiosInstance from "../api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FaCrown } from "react-icons/fa";
 import { LuCalendarDays } from "react-icons/lu";
 import { PrimaryButton } from "../components/Buttons";
@@ -12,12 +12,16 @@ import useUserRole from "../hooks/useUserRole";
 
 const AllArticlesPublic = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const selectedFromState = location.state?.selectedPublisher;
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [searchPublisher, setSearchPublisher] = useState("");
+  const [selectedPublisher, setSelectedPublisher] = useState("");
   const [searchTag, setSearchTag] = useState("");
   const [articles, setArticles] = useState([]);
   const [debouncedSearch, setDebouncedSearch] = useState("");
+
   const { role, isLoading: roleLoading, error: roleError } = useUserRole();
   //   console.log(user);
   const { data, isLoading, isError } = useQuery({
@@ -43,6 +47,12 @@ const AllArticlesPublic = () => {
   });
 
   console.log(publishers);
+
+  useEffect(() => {
+    if (selectedFromState) {
+      setSearchPublisher(selectedFromState);
+    }
+  }, [selectedFromState]);
 
   useEffect(() => {
     if (data) setArticles(data);

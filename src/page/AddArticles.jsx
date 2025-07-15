@@ -48,7 +48,7 @@ export default function AddArticles() {
   };
 
   const onSubmit = async (data) => {
-    const { title, description, publisher, tags, image } = data;
+    const { title, description, publisher, tags, image, tickerText } = data;
     const initialStatus = {
       isApprove: null,
       isDecline: null,
@@ -62,6 +62,7 @@ export default function AddArticles() {
       //   console.log(imageUrl);
       const articleData = {
         title,
+        tickerText,
         description,
         publisher,
         tags: tag,
@@ -135,6 +136,16 @@ export default function AddArticles() {
             {errors.title && (
               <p className="text-error text-sm mt-1">{errors.title.message}</p>
             )}
+          </div>
+
+          <div>
+            <label className="block mb-1 font-medium">Ticker Text</label>
+            <input
+              type="text"
+              placeholder="Enter Ticker Text"
+              {...register("tickerText")}
+              className="input input-bordered w-full"
+            />
           </div>
 
           <div>

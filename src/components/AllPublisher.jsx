@@ -46,7 +46,10 @@ const AllPublisher = () => {
         Explore All Trusted News Publishers
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-6 " data-aos="fade-up">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-6 "
+        data-aos="fade-up"
+      >
         {displayPublishers.map((publisher) => (
           <div
             key={publisher._id}
@@ -64,7 +67,8 @@ const AllPublisher = () => {
             {/* Publisher Name */}
             <h3 className="text-lg font-semibold text-center text-primary mb-2">
               <Link
-                to={`/publisher/articles/${publisher.name}`}
+                to="/all-articles"
+                state={{ selectedPublisher: publisher.name }}
                 className="hover:underline"
               >
                 {publisher.name}
