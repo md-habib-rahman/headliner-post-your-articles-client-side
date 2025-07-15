@@ -64,7 +64,7 @@ const AllArticlesPublic = () => {
 
   const handleDetails = (id) => {
     navigate(`/article-details/${id}`, {
-      state: { from: "allArticlesPublic" },
+      state: { from: "allArticles" },
     });
   };
 
