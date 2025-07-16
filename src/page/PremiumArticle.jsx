@@ -6,10 +6,12 @@ import { Link, useNavigate } from "react-router";
 import Loader from "../components/Loader";
 import { BiCategoryAlt } from "react-icons/bi";
 import { LuCalendarDays } from "react-icons/lu";
-import { PrimaryButton } from "../components/Buttons";
+import { PrimaryButton, PrimaryLink } from "../components/Buttons";
 import { FaCrown } from "react-icons/fa";
 import ErrorPage from "./ErrorPage";
 import useUserRole from "../hooks/useUserRole";
+import notFound from '../assets/not found.json'
+import Lottie from "lottie-react";
 
 const PremiumArticle = () => {
   const { user } = useAuth();
@@ -31,7 +33,15 @@ const PremiumArticle = () => {
   });
 
   if (role !== "premium") {
-    navigate("/error");
+    return (
+      <div className="text-center p-8">
+		<Lottie animationData={notFound} className="w-96 mx-auto" loop={true}></Lottie>
+        <h2 className="text-xl font-bold">You are not allowed</h2>
+        <PrimaryLink className="mt-4" to="/">
+          Go to Home
+        </PrimaryLink>
+      </div>
+    );
   }
 
   const handleDetails = (id) => {
@@ -43,7 +53,7 @@ const PremiumArticle = () => {
   //   if (data) {
   //     setArticles(data);
   //   }
-
+  if (roleLoading) return <div className="text-center p-8">Checking...</div>;
   if (isLoading) return <Loader />;
   if (isError)
     return <div className="text-center p-8">Error loading articles</div>;

@@ -35,7 +35,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/premium-articles" className="hover:text-primary">
+              <Link to="premium-articles" className="hover:text-primary">
                 Premium Articles
               </Link>
             </li>

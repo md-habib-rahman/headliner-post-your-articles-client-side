@@ -112,7 +112,7 @@ const MyProfile = () => {
 
   return (
     <div
-      className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-xl rounded-lg"
+      className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-xl rounded-lg mb-10"
       data-aos="fade-up"
     >
       <h2 className="text-2xl font-bold text-center mb-6 text-primary">

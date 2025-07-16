@@ -11,6 +11,7 @@ import axiosInstance from "../api/axiosInstance";
 
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 // import '../styles/common.css';
 
@@ -21,6 +22,7 @@ const PaymentForm = () => {
   const [plan, setPlan] = useState(null);
   const [error, setError] = useState(null);
   const [subscriptionDuration, setSubscriptionDuration] = useState(null);
+  const navigate = useNavigate();
 
   // console.log(user);
   const handleSubmit = async (event) => {
@@ -95,7 +97,9 @@ const PaymentForm = () => {
           `/user/active-subscription/${email}`,
           { premiumTaken, subscriptionDuration }
         );
-		console.log(userActivation.data)
+
+        navigate("/");
+        console.log(userActivation.data)
         setError(null);
       } else {
         setError(`Payment status: ${result.paymentIntent.status}`);
