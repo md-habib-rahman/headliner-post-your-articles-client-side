@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 import axiosInstance from "../api/axiosInstance";
+import ArticleComment from "../components/ArticleComment";
 
 const ArticleDetails = () => {
   const { id } = useParams();
@@ -81,6 +82,7 @@ const ArticleDetails = () => {
           ))}
         </div>
       </div>
+      <ArticleComment id={id} />
     </div>
   );
 };

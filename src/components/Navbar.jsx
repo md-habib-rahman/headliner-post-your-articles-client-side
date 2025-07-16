@@ -17,14 +17,19 @@ import Swal from "sweetalert2";
 import Loader from "./Loader";
 import useUserRole from "../hooks/useUserRole";
 import { navLinks } from "./NavLinks";
+import useSubscriptionStatus from "../hooks/useSubscriptionStatus";
 
 const Navbar = () => {
   const { user, loading, logOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { role, isLoading, error } = useUserRole();
-  console.log(role);
+  //   const {
+  //     subscription,
+  //     error: subError,
+  //     isLoading: subLoading,
+  //   } = useSubscriptionStatus();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
+  console.log(role);
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -94,7 +99,7 @@ const Navbar = () => {
               </NavLink>
             ))}
           {user ? (
-            <div className="dropdown dropdown-end">
+            <div className="dropdown dropdown-right dropdown-center ">
               <label
                 tabIndex={0}
                 className="btn btn-ghost btn-circle avatar hover:scale-110 transition-transform duration-200"
@@ -120,12 +125,12 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 "
+                className="menu menu-sm dropdown-content mt-3 p-2 shadow-sm rounded-box fixed w-52  bg-base-100  z-50"
               >
                 <li>
                   <Link
                     to="user-profile"
-                    className="justify-between text-lg bg-secondary/60 mb-1.5 hover:scale-102 transition-all"
+                    className="justify-between text-md bg-secondary/60 mb-1.5 hover:scale-102 transition-all"
                   >
                     Profile
                   </Link>
@@ -133,7 +138,7 @@ const Navbar = () => {
                 <li>
                   <button
                     onClick={handleLogout}
-                    className="text-lg bg-secondary/60 hover:scale-102 transition-all"
+                    className="text-md bg-secondary/60 hover:scale-102 transition-all"
                   >
                     Logout
                   </button>

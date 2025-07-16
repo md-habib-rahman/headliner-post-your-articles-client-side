@@ -36,27 +36,18 @@ const UserArticleCountChart = () => {
   console.log(barChartData);
   if (loading) return <div>Loading chart...</div>;
 
+  const options = {
+    title: "User-wise Article Count",
+  };
+
   return (
-    <div>
-      <Chart
-        chartType="BarChart"
-        width="100%"
-        height="300px"
-        data={barChartData}
-        options={{
-          title: "User-wise Article Count",
-          chartArea: { width: "50%", left: 0 },
-          hAxis: {
-            title: "Number of Articles",
-            minValue: 0,
-          },
-          vAxis: {
-            title: "User",
-          },
-          legend: { position: "none" },
-        }}
-      />
-    </div>
+    <Chart
+      chartType="BarChart"
+      width="100%"
+      height="300px"
+      data={barChartData}
+      options={options}
+    />
   );
 };
 

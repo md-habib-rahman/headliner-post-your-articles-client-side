@@ -19,11 +19,11 @@ const NewsTicker = () => {
   });
 
   return (
-    <div className="bg-yellow-100 border-b border-yellow-300 py-2 px-4 flex items-center gap-4">
-      <FcNews className=" text-xl animate-pulse" />
+    <div className="bg-yellow-100 border-b border-yellow-300 py-2 px-4 flex items-center gap-4 custom-z ">
+      <FcNews className=" text-xl animate-pulse custom-z" />
       <Marquee pauseOnHover gradient={false} speed={50}>
         {headlines.map((headline, index) => (
-          <span key={index} className="mx-6 font-medium text-gray-800">
+          <span key={index} className="mx-6 font-medium text-gray-800 custom-z">
             📰 {headline}
           </span>
         ))}

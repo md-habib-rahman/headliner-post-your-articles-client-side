@@ -52,11 +52,12 @@ const Register = () => {
 
       //upload image to imgbb
       const imgbbUrl = await uploadImageToImgbb(image[0]);
-      console.log(imgbbUrl);
+      //   console.log(imgbbUrl);
       const userInfo = {
         name,
         email,
         role: "user",
+        premiumTaken: null,
         photoURL: imgbbUrl,
         createdAt: new Date().toISOString(),
       };
@@ -102,6 +103,7 @@ const Register = () => {
           email: result.user.email,
           name: result.user.displayName,
           role: "user",
+          premiumTaken: null,
           photoURL: result.user.photoURL,
           createdAt: new Date().toISOString(),
         };
@@ -154,7 +156,6 @@ const Register = () => {
                 <p className="text-error text-sm mt-1">{errors.name.message}</p>
               )}
             </div>
-            {/* image upload here */}
             <div>
               <label className="block mb-1 font-medium">Profile Image</label>
               <input
@@ -198,6 +199,9 @@ const Register = () => {
                       /[A-Z]/.test(v) || "Must include an uppercase letter",
                     hasNumber: (v) =>
                       /[0-9]/.test(v) || "Must include a number",
+                    hasSpecial: (v) =>
+                      /[!@#$%^&*]/.test(v) ||
+                      "Must include a special character",
                   },
                 })}
                 className="input input-bordered w-full"

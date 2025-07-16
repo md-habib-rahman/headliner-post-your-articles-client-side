@@ -12,6 +12,11 @@ const MainLayout = () => {
     });
   }, []);
 
+  useEffect(() => {
+    document.title = "HeadLiner | Best Articles";
+   
+  }, []);
+
   const { user, loading } = useAuth();
   if (loading) {
     return (

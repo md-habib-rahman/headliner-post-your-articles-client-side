@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import notFoundAnimation from "../assets/Error Lottie.json";
 import Lottie from "lottie-react";
 import { Link } from "react-router";
 
 const ErrorPage = () => {
+  useEffect(() => {
+    document.title = "HeadLiner | Error";
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-400 text-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-500 text-center ">
       <div className=" w-full">
         <Lottie
           animationData={notFoundAnimation}
@@ -13,10 +17,8 @@ const ErrorPage = () => {
           className="w-full h-96 mx-auto"
         />
 
-        <h1 className="text-4xl font-bold mt-4 text-gray-800 dark:text-white">
-          Page Not Found
-        </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <h1 className="text-4xl font-bold  text-base-100">Page Not Found</h1>
+        <p className="mt-2 text-base-200 ">
           Sorry, the page you are looking for does not exist or has been moved.
         </p>
 

@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import "aos/dist/aos.css";
 
 const AllPublisher = () => {
-  const [showAll, setShowAll] = useState(false); // State to toggle between showing 12 or all publishers
+  const [showAll, setShowAll] = useState(false);
   const [displayPublishers, setDisplayPublishers] = useState([]);
 
   const {

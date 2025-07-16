@@ -24,7 +24,7 @@ const HeroBanner = () => {
     );
 
   return (
-    <div >
+    <div className=" ">
      
       <ArticleSlider articles={articles}></ArticleSlider>
     </div>

@@ -1,10 +1,22 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import HeadlinerLogo from "../components/HeadlinerLogo";
 import { adminLinks } from "../components/NavLinks";
-
+import useUserRole from "../hooks/useUserRole";
+import ErrorPage from "../page/ErrorPage";
+import { useEffect } from "react";
 
 export default function DashboardLayout() {
+  const { role, isLoading, error } = useUserRole();
+  const navigate = useNavigate();
   //   console.log(adminLinks)
+
+    useEffect(() => {
+	  document.title = "HeadLiner | Best Articles";
+	}, []);
+
+  if (role !== "admin") {
+    return <ErrorPage />;
+  }
   return (
     <div className="bg-base-100 min-h-screen">
       {/* Top Navbar */}
@@ -46,7 +58,10 @@ export default function DashboardLayout() {
           <ul className="menu text-base-content space-y-2">
             {adminLinks.map((link, idx) => (
               <li key={idx} className="border-b-1 border-base-300">
-                <Link to={link.path}>{link.label}{link.icon}</Link>
+                <Link to={link.path}>
+                  {link.label}
+                  {link.icon}
+                </Link>
               </li>
             ))}
           </ul>

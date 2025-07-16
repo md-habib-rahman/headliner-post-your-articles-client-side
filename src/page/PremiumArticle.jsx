@@ -8,13 +8,14 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { LuCalendarDays } from "react-icons/lu";
 import { PrimaryButton } from "../components/Buttons";
 import { FaCrown } from "react-icons/fa";
+import ErrorPage from "./ErrorPage";
+import useUserRole from "../hooks/useUserRole";
 
 const PremiumArticle = () => {
   const { user } = useAuth();
-  const navigate = useNavigate(); // Get current logged-in user
-  //   const [articles, setArticles] = useState([]);
+  const navigate = useNavigate();
+  const { role, isLoading: roleLoading, error } = useUserRole();
 
-  // Fetch Premium Articles using TanStack Query
   const {
     data: articles = [],
     isLoading,
@@ -28,6 +29,10 @@ const PremiumArticle = () => {
       return response.data;
     },
   });
+
+  if (role !== "premium") {
+    navigate("/error");
+  }
 
   const handleDetails = (id) => {
     navigate(`/article-details/${id}`, {
