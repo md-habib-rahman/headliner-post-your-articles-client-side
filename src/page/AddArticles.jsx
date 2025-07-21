@@ -74,10 +74,10 @@ export default function AddArticles() {
         createdBy: user?.email,
         createdAt: new Date().toISOString(),
       };
-      console.log(articleData);
+    //   console.log(articleData);
 
       const response = await axiosInstance.post("/articles", articleData);
-      console.log(articleData);
+    //   console.log(articleData);
       if (response.data.success) {
         Swal.fire({
           position: "top-end",

@@ -98,81 +98,85 @@ const Navbar = () => {
                 {link.label === "Subscription" && <FaCrown />}
               </NavLink>
             ))}
-          {user ? (
-            <div className="dropdown dropdown-right dropdown-center ">
-              <label
-                tabIndex={0}
-                className="btn btn-ghost btn-circle avatar hover:scale-110 transition-transform duration-200"
-              >
-                <div className="w-8 rounded-full">
-                  <img
-                    src={
-                      user?.photoURL ||
-                      "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
-                    }
-                    onError={(e) =>
-                      (e.currentTarget.src =
-                        "https://i.ibb.co/jZf74p9g/User-avatar-svg.png")
-                    }
-                    // src={
-                    //   user?.photoURL
-                    //     ? user?.photoURL
-                    //     : "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
-                    // }
-                    alt="User"
-                  />
-                </div>
-              </label>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 p-2 shadow-sm rounded-box fixed w-52  bg-base-100  z-50"
-              >
-                <li>
-                  <Link
-                    to="user-profile"
-                    className="justify-between text-md bg-secondary/60 mb-1.5 hover:scale-102 transition-all"
-                  >
-                    Profile
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="text-md bg-secondary/60 hover:scale-102 transition-all"
-                  >
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
-          ) : (
-            <>
-              {" "}
-              <PrimaryLink to="/auth/login">Login</PrimaryLink>
-              <SecondaryLink to="/auth/registration">Register</SecondaryLink>
-            </>
-          )}
-
-          <button
-            onClick={handleThemeChange}
-            className="btn btn-ghost btn-circle text-xl"
-            aria-label="Toggle Theme"
-          >
-            {isDark ? (
-              <FaMoon className="text-yellow-400" />
-            ) : (
-              <FiSun className="text-indigo-500" />
-            )}
-          </button>
         </div>
+        <div className="flex items-center">
+          <div className="flex items-center gap-6  ">
+            {user ? (
+              <div className="dropdown dropdown-right dropdown-center ">
+                <label
+                  tabIndex={0}
+                  className="btn btn-ghost btn-circle avatar hover:scale-110 transition-transform duration-200"
+                >
+                  <div className="w-8 rounded-full">
+                    <img
+                      src={
+                        user?.photoURL ||
+                        "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
+                      }
+                      onError={(e) =>
+                        (e.currentTarget.src =
+                          "https://i.ibb.co/jZf74p9g/User-avatar-svg.png")
+                      }
+                      // src={
+                      //   user?.photoURL
+                      //     ? user?.photoURL
+                      //     : "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
+                      // }
+                      alt="User"
+                    />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 p-2 shadow-sm rounded-box fixed w-52  bg-base-100  z-50"
+                >
+                  <li>
+                    <Link
+                      to="user-profile"
+                      className="justify-between text-md bg-secondary/60 mb-1.5 hover:scale-102 transition-all"
+                    >
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="text-md bg-secondary/60 hover:scale-102 transition-all"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <>
+                {" "}
+                <PrimaryLink to="/auth/login">Login</PrimaryLink>
+                <SecondaryLink to="/auth/registration">Register</SecondaryLink>
+              </>
+            )}
 
-        <div className="md:hidden">
-          <button
-            onClick={toggleMenu}
-            className="text-primary focus:outline-none"
-          >
-            {isMenuOpen ? <IoClose size={35} /> : <HiOutlineMenu size={35} />}
-          </button>
+            <button
+              onClick={handleThemeChange}
+              className="btn btn-ghost btn-circle text-xl"
+              aria-label="Toggle Theme"
+            >
+              {isDark ? (
+                <FaMoon className="text-yellow-400" />
+              ) : (
+                <FiSun className="text-indigo-500" />
+              )}
+            </button>
+          </div>
+
+          <div className="md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-primary focus:outline-none"
+            >
+              {isMenuOpen ? <IoClose size={35} /> : <HiOutlineMenu size={35} />}
+            </button>
+          </div>
         </div>
       </div>
 

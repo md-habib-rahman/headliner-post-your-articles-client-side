@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axiosInstance from "../../api/axiosInstance";
 import axios from "axios";
@@ -17,7 +17,15 @@ const AllArticles = () => {
   const { user: currentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedArticleId, setSelectedArticleId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [articleCount, setArticleCount] = useState(0);
+  //   const [itemsPerPage, setItemsPerPage] = useState(5);
   // Fetch Users
+
+  axiosInstance.get("/articles/count").then((res) => {
+    console.log(res.data);
+    setArticleCount(res.data);
+  });
   const {
     data: articles = [],
     isLoading,
@@ -26,10 +34,27 @@ const AllArticles = () => {
   } = useQuery({
     queryKey: ["articleWithUser"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/articles-with-users");
+      const res = await axiosInstance.get("/articles-with-users", {
+        params: { currentPage, itemsPerPage },
+      });
       return res.data;
     },
   });
+
+  //   console.log(data);
+
+  useEffect(() => {
+    refetch();
+  }, [currentPage]);
+
+  //   const totalArticles = articles.length;
+  const itemsPerPage = 5;
+  const numberOfPages = Math.ceil(articleCount / itemsPerPage);
+  const pages = [
+    ...Array(numberOfPages)
+      .keys()
+      .map((i) => i + 1),
+  ];
 
   const { data: publisher = [] } = useQuery({
     queryKey: ["publisher"],
@@ -133,6 +158,18 @@ const AllArticles = () => {
     // console.log("clicked");
   };
 
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   //   console.log(articles[0]?.approvalStatus);
 
   //    Swal.fire({
@@ -149,8 +186,8 @@ const AllArticles = () => {
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4 font-montserrat">All Articles</h2>
 
-      <div className="">
-        <table className="table table-zebra w-full">
+      <div className="overflow-x-auto">
+        <table className="table table-zebra w-full min-w-[800px]">
           <thead>
             <tr>
               <th>#</th>
@@ -251,6 +288,23 @@ const AllArticles = () => {
           refetch={refetch}
         />
       )}
+      <div className="flex justify-center my-4 gap-4">
+        <button className="btn" onClick={handlePrevPage}>
+          Pre
+        </button>
+        {pages.map((page) => (
+          <button
+            className={`${currentPage === page ? "btn-primary btn" : "btn"}`}
+            onClick={() => setCurrentPage(page)}
+            key={page}
+          >
+            {page}
+          </button>
+        ))}
+        <button className="btn" onClick={handleNextPage}>
+          Next
+        </button>
+      </div>
     </div>
   );
 };

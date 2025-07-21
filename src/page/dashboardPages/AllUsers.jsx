@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axiosInstance from "../../api/axiosInstance";
 import axios from "axios";
@@ -8,6 +8,13 @@ import useAuth from "../../hooks/useAuth";
 
 const AllArticles = () => {
   const { user: currentUser } = useAuth();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersCount, setUsersCount] = useState(0);
+
+  axiosInstance.get("/users/count").then((res) => {
+    console.log(res.data);
+    setUsersCount(res.data);
+  });
   // Fetch Users
   const {
     data: users = [],
@@ -17,10 +24,35 @@ const AllArticles = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/users");
+      const res = await axiosInstance.get("/users", {
+        params: { currentPage, itemsPerPage },
+      });
       return res.data;
     },
   });
+
+  const itemsPerPage = 5;
+  const numberOfPages = Math.ceil(usersCount / itemsPerPage);
+  const pages = [
+    ...Array(numberOfPages)
+      .keys()
+      .map((i) => i + 1),
+  ];
+  useEffect(() => {
+    refetch();
+  }, [currentPage]);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const updateRole = async (role, email) => {
     const result = await axiosInstance.patch(`/users/role/${email}`, {
@@ -107,7 +139,27 @@ const AllArticles = () => {
               </tr>
             ))}
           </tbody>
+          
         </table>
+		<div className="flex justify-center my-4 gap-4">
+            <button className="btn" onClick={handlePrevPage}>
+              Pre
+            </button>
+            {pages.map((page) => (
+              <button
+                className={`${
+                  currentPage === page ? "btn-primary btn" : "btn"
+                }`}
+                onClick={() => setCurrentPage(page)}
+                key={page}
+              >
+                {page}
+              </button>
+            ))}
+            <button className="btn" onClick={handleNextPage}>
+              Next
+            </button>
+          </div>
       </div>
     </div>
   );

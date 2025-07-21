@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import {
   createUserWithEmailAndPassword,
+  getIdToken,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -10,7 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
-
+import { setAccessToken } from "../js/authToken";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -42,7 +43,15 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    if (user && !loading) {
+      const token = user?.accessToken;
+      localStorage.setItem("accessToken", token);
+      console.log("access token saved to local storage", token);
+    }
+  }, [user, loading]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       setLoading(false);
       console.log("User in the auth state change: ", currentUser);
@@ -59,7 +68,7 @@ const AuthProvider = ({ children }) => {
     LoginWithEmail,
     logOut,
     updateUserProfile,
-	signInWithGoogle
+    signInWithGoogle,
   };
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };

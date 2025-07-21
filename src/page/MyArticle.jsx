@@ -10,8 +10,10 @@ import DeclineMessageModal from "./DeclineMessageModal";
 import Swal from "sweetalert2";
 import { GrValidate } from "react-icons/gr";
 import { BsClock } from "react-icons/bs";
+import useAxiosInstanceSecure from "../api/axiosInstanceSecure";
 
 const MyArticle = () => {
+  const axiosSecure = useAxiosInstanceSecure();
   const [modalOpen, setModalOpen] = useState(false);
   const [declineReason, setDeclineReason] = useState("");
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const MyArticle = () => {
   } = useQuery({
     queryKey: ["userArticles"],
     queryFn: async () => {
-      const res = await axiosInstance.get(
+      const res = await axiosSecure.get(
         `/article/my-articles/?email=${user.email}`
       );
       return res.data;

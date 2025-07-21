@@ -8,6 +8,7 @@ import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import SocialButtons from "../components/SocialButtons";
 import axiosInstance from "../api/axiosInstance";
+import { setAccessToken } from "../js/authToken";
 
 export default function Login() {
   const { user, registerWithEmail, LoginWithEmail, signInWithGoogle } =
@@ -74,7 +75,7 @@ export default function Login() {
           showConfirmButton: false,
           timer: 1500,
         });
-
+        
         navigate(from);
       })
       .catch((error) => {

@@ -6,7 +6,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 const PaymentCards = () => {
   return (
-    <div className="py-18  text-center">
+    <div className="py-18  text-center max-w-7xl mx-auto">
       <h2
         className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary  font-montserrat"
         data-aos="fade-right"
@@ -16,7 +16,7 @@ const PaymentCards = () => {
       <p data-aos="fade-left" className="mb-12 text-primary/60">
         Subscribe now and never miss a breaking story
       </p>
-      <div className="grid grid-cols-1  md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1  md:grid-cols-3 gap-6 mx-8 ">
         <div
           data-aos="fade-right"
           className="bg-base-300 p-6 rounded-lg shadow-lg"
