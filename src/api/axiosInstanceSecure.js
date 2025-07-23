@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getAccessToken } from "../js/authToken";
 
 const useAxiosInstanceSecure = () => {
   const axiosInstanceSecure = axios.create({

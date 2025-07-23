@@ -8,8 +8,10 @@ import { tags } from "../js/tags";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosInstanceSecure from "../api/axiosInstanceSecure";
 
 export default function AddArticles() {
+	const axiosSecure = useAxiosInstanceSecure();
   const { user } = useAuth();
   const {
     data: publishers = [],
@@ -76,7 +78,7 @@ export default function AddArticles() {
       };
     //   console.log(articleData);
 
-      const response = await axiosInstance.post("/articles", articleData);
+      const response = await axiosSecure.post("/articles", articleData);
     //   console.log(articleData);
       if (response.data.success) {
         Swal.fire({

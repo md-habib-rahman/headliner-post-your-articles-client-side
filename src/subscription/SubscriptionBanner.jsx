@@ -2,6 +2,7 @@ import React from "react";
 import "aos/dist/aos.css";
 import lottieAnimation from "../assets/news.json";
 import Lottie from "lottie-react";
+import { Typewriter } from "react-simple-typewriter";
 
 const SubscriptionBanner = () => {
   return (
@@ -12,11 +13,13 @@ const SubscriptionBanner = () => {
       <div className="flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="text-center ">
           <h2 className="text-2xl md:text-5xl font-bold mb-3 font-montserrat">
-            Stay Ahead with the <br />
-            Latest News!
+            Stay {""}{" "}
+            <span className="text-secondary">
+              <Typewriter words={["Informed!", "Ahead!"]} loop={0} cursor />
+            </span>
           </h2>
           <p className="text-md md:text-lg text-gray-200">
-            Subscribe now and never miss a breaking story. 
+            Subscribe now and never miss a breaking story.
           </p>
         </div>
       </div>

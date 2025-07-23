@@ -42,9 +42,10 @@ const UserArticleCountChart = () => {
 
   return (
     <Chart
+	className="flex-1 shadow-xl "
       chartType="BarChart"
-      width="100%"
-      height="300px"
+      //   width="100%"
+      //   height="300px"
       data={barChartData}
       options={options}
     />

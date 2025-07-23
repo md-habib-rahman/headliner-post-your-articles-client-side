@@ -3,15 +3,18 @@ import axiosInstance from "../../../api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import "aos/dist/aos.css";
 import Chart from "react-google-charts";
+import axiosInstanceSecure from "../../../api/axiosInstanceSecure";
+import useAxiosInstanceSecure from "../../../api/axiosInstanceSecure";
 
 const PubliserArticlePieChart = () => {
+  const axiosSecure = useAxiosInstanceSecure();
   const [chartData, setChartData] = useState([["Publisher", "Articles"]]);
   const [loading, setLoading] = useState(true);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["publisherArticleCounts"],
     queryFn: async () => {
-      const response = await axiosInstance.get("/stats/articles-by-publisher");
+      const response = await axiosSecure.get("/stats/articles-by-publisher");
       return response.data;
     },
   });
@@ -32,33 +35,28 @@ const PubliserArticlePieChart = () => {
   if (isError) return <div>{"Error loading chart data"}</div>;
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h2 className="text-2xl font-bold text-primary mb-6">
-        Publisher Article Contribution
-      </h2>
+    <Chart
+      className="shadow-xl "
+      chartType="PieChart"
+      data={chartData}
+      options={{
+        is3D: true,
+        title: "Publisher wise article contribution",
+        chartArea: {
+          left: 0,
+          top: 10,
 
-      <div className="p-6 bg-white dark:bg-base-300 rounded-lg shadow-lg">
-        <Chart
-          chartType="PieChart"
-          data={chartData}
-          options={{
-            is3D: true,
-            chartArea: {
-              left: 0,
-              top: 10,
-              width: "100%",
-              height: "100%",
-            },
+          //   width: "100%",
+          //   height: "100%",
+        },
 
-            slices: {
-              0: { offset: 0.1 },
-            },
-          }}
-          height="400px"
-          width="100%"
-        />
-      </div>
-    </div>
+        slices: {
+          0: { offset: 0.1 },
+        },
+      }}
+      //   height="400px"
+      //   width="100%"
+    />
   );
 };
 

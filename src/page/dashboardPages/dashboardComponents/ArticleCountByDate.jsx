@@ -24,9 +24,10 @@ const ArticleCountByDate = () => {
   if (isLoading) return <p>Loading chart...</p>;
   return (
     <Chart
+      className="flex-1 shadow-xl"
       chartType="ColumnChart"
-      width="100%"
-      height="400px"
+      //   width="50%"
+      //   height="400px"
       data={chartData}
       options={options}
     />

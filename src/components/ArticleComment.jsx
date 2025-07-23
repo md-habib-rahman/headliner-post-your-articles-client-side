@@ -17,13 +17,12 @@ const ArticleComment = () => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm();
-  
+
   const onSubmit = async (data) => {
     if (!user) {
       Swal.fire("Oops!", "You must be logged in to comment", "warning");
       return;
     }
-   
 
     const commentData = {
       articleId: id,
@@ -47,7 +46,7 @@ const ArticleComment = () => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 mt-8" data-aos="fade-up">
+    <div className="bg-white shadow-md rounded-lg p-6 mt-8">
       <h3 className="text-lg font-semibold mb-4 text-primary">
         Leave a Comment
       </h3>

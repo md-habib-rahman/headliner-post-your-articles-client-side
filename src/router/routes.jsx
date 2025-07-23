@@ -20,6 +20,7 @@ import AllArticles from "../page/dashboardPages/AllArticles";
 import Subscription from "../subscription/Subscription";
 import Payment from "../subscription/Payment";
 import PremiumArticle from "../page/PremiumArticle";
+import AboutUs from "../page/AboutUs";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "all-articles",
         Component: AllArticlesPublic,
+      },
+      {
+        path: "about-us",
+        Component: AboutUs,
       },
       {
         path: "user-profile",

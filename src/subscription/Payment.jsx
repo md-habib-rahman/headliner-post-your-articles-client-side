@@ -12,6 +12,7 @@ import axiosInstance from "../api/axiosInstance";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router";
+import useAxiosInstanceSecure from "../api/axiosInstanceSecure";
 
 // import '../styles/common.css';
 
@@ -22,6 +23,7 @@ const PaymentForm = () => {
   const [plan, setPlan] = useState(null);
   const [error, setError] = useState(null);
   const [subscriptionDuration, setSubscriptionDuration] = useState(null);
+  const axiosSecure = useAxiosInstanceSecure();
   const navigate = useNavigate();
 
   // console.log(user);
@@ -93,13 +95,13 @@ const PaymentForm = () => {
         const now = new Date();
         const premiumTaken = now.toISOString();
         const email = user?.email;
-        const userActivation = await axiosInstance.patch(
+        const userActivation = await axiosSecure.patch(
           `/user/active-subscription/${email}`,
           { premiumTaken, subscriptionDuration }
         );
 
         navigate("/");
-        console.log(userActivation.data)
+        console.log(userActivation.data);
         setError(null);
       } else {
         setError(`Payment status: ${result.paymentIntent.status}`);

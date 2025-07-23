@@ -12,6 +12,8 @@ import {
   FaTrashAlt,
 } from "react-icons/fa";
 import DeclineModal from "./dashboardComponents/DeclineModal";
+import useAxiosInstanceSecure from "../../api/axiosInstanceSecure";
+import Loader from "../../components/Loader";
 
 const AllArticles = () => {
   const { user: currentUser } = useAuth();
@@ -19,10 +21,11 @@ const AllArticles = () => {
   const [selectedArticleId, setSelectedArticleId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [articleCount, setArticleCount] = useState(0);
+  const axiosSecure = useAxiosInstanceSecure();
   //   const [itemsPerPage, setItemsPerPage] = useState(5);
   // Fetch Users
 
-  axiosInstance.get("/articles/count").then((res) => {
+  axiosSecure.get("/articles/count").then((res) => {
     console.log(res.data);
     setArticleCount(res.data);
   });
@@ -34,7 +37,7 @@ const AllArticles = () => {
   } = useQuery({
     queryKey: ["articleWithUser"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/articles-with-users", {
+      const res = await axiosSecure.get("/articles-with-users", {
         params: { currentPage, itemsPerPage },
       });
       return res.data;
@@ -76,7 +79,7 @@ const AllArticles = () => {
 
     if (result.isConfirmed) {
       try {
-        await axiosInstance.delete(`/article/${id}`);
+        await axiosSecure.delete(`/article/${id}`);
 
         Swal.fire({
           position: "top-end",
@@ -100,7 +103,7 @@ const AllArticles = () => {
 
   const handleMakePremium = async (id) => {
     console.log("button clicked");
-    const resutl = await axiosInstance.patch(`/make-premium/${id}`);
+    const resutl = await axiosSecure.patch(`/make-premium/${id}`);
     if (resutl.data.modifiedCount === 1) {
       Swal.fire({
         position: "top-end",
@@ -125,7 +128,7 @@ const AllArticles = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await axiosInstance.patch(
+        const response = await axiosSecure.patch(
           `/article/allow-approval/${id}`
         );
         if (response.data) {
@@ -179,7 +182,7 @@ const AllArticles = () => {
   //             showConfirmButton: false,
   //             timer: 1500,
 
-  if (isLoading) return <p>Loading users...</p>;
+  if (isLoading) return <Loader />;
   if (isError) return <p>Error loading users.</p>;
 
   return (

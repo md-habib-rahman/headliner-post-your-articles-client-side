@@ -10,10 +10,12 @@ import { PrimaryButton, PrimaryLink } from "../components/Buttons";
 import { FaCrown } from "react-icons/fa";
 import ErrorPage from "./ErrorPage";
 import useUserRole from "../hooks/useUserRole";
-import notFound from '../assets/not found.json'
+import notFound from "../assets/not found.json";
 import Lottie from "lottie-react";
+import useAxiosInstanceSecure from "../api/axiosInstanceSecure";
 
 const PremiumArticle = () => {
+  const axiosSecure = useAxiosInstanceSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
   const { role, isLoading: roleLoading, error } = useUserRole();
@@ -25,9 +27,7 @@ const PremiumArticle = () => {
   } = useQuery({
     queryKey: ["premiumArticles"],
     queryFn: async () => {
-      const response = await axiosInstance.get("/articles/premium", {
-        params: { isPremium: true },
-      });
+      const response = await axiosSecure.get("/articles/premium");
       return response.data;
     },
   });
@@ -35,7 +35,11 @@ const PremiumArticle = () => {
   if (role !== "premium") {
     return (
       <div className="text-center p-8">
-		<Lottie animationData={notFound} className="w-96 mx-auto" loop={true}></Lottie>
+        <Lottie
+          animationData={notFound}
+          className="w-96 mx-auto"
+          loop={true}
+        ></Lottie>
         <h2 className="text-xl font-bold">You are not allowed</h2>
         <PrimaryLink className="mt-4" to="/">
           Go to Home

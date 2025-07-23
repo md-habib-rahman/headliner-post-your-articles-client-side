@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 import axiosInstance from "../api/axiosInstance";
 import ArticleComment from "../components/ArticleComment";
+import ExistingComments from "../components/ExistingComments";
 
 const ArticleDetails = () => {
   const { id } = useParams();
@@ -82,6 +83,7 @@ const ArticleDetails = () => {
           ))}
         </div>
       </div>
+      <ExistingComments id={id} />
       <ArticleComment id={id} />
     </div>
   );

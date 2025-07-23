@@ -53,7 +53,7 @@ const AllPublisher = () => {
         {displayPublishers.map((publisher) => (
           <div
             key={publisher._id}
-            className="bg-white dark:bg-base-300 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+            className="bg-base-300 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 hover:scale-105"
           >
             {/* Publisher Image */}
             <div className="w-full h-32 mb-4">

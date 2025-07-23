@@ -1,20 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import axiosInstance from "../../api/axiosInstance";
-import axios from "axios";
+// import axiosInstance from "../../api/axiosInstance";
+// import axios from "axios";
 import { PrimaryButton } from "../../components/Buttons";
 import useAuth from "../../hooks/useAuth";
+import useAxiosInstanceSecure from "../../api/axiosInstanceSecure";
 
 const AllArticles = () => {
   const { user: currentUser } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
   const [usersCount, setUsersCount] = useState(0);
+  const axiosSecure = useAxiosInstanceSecure();
 
-  axiosInstance.get("/users/count").then((res) => {
-    console.log(res.data);
-    setUsersCount(res.data);
-  });
+  const fetchUsersCount = async () => {
+    try {
+      const res = await axiosSecure.get("/users/count");
+      console.log(res.data);
+      setUsersCount(res.data);
+    } catch (error) {
+      console.error("Error fetching user count:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsersCount();
+  }, []);
   // Fetch Users
   const {
     data: users = [],
@@ -24,7 +35,7 @@ const AllArticles = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/users", {
+      const res = await axiosSecure.get("/users", {
         params: { currentPage, itemsPerPage },
       });
       return res.data;
@@ -55,10 +66,10 @@ const AllArticles = () => {
   };
 
   const updateRole = async (role, email) => {
-    const result = await axiosInstance.patch(`/users/role/${email}`, {
+    const result = await axiosSecure.patch(`/users/role/${email}`, {
       role: role,
     });
-    return result.success;
+    return result.status;
   };
 
   const handleMakeAdmin = (user) => {
@@ -73,7 +84,7 @@ const AllArticles = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         const res = updateRole("admin", user.email);
-        if (res) {
+        if (res.status === 200) {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -82,6 +93,14 @@ const AllArticles = () => {
             timer: 1500,
           });
           refetch();
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "User role failed to change!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       }
     });
@@ -139,27 +158,24 @@ const AllArticles = () => {
               </tr>
             ))}
           </tbody>
-          
         </table>
-		<div className="flex justify-center my-4 gap-4">
-            <button className="btn" onClick={handlePrevPage}>
-              Pre
+        <div className="flex justify-center my-4 gap-4">
+          <button className="btn" onClick={handlePrevPage}>
+            Pre
+          </button>
+          {pages.map((page) => (
+            <button
+              className={`${currentPage === page ? "btn-primary btn" : "btn"}`}
+              onClick={() => setCurrentPage(page)}
+              key={page}
+            >
+              {page}
             </button>
-            {pages.map((page) => (
-              <button
-                className={`${
-                  currentPage === page ? "btn-primary btn" : "btn"
-                }`}
-                onClick={() => setCurrentPage(page)}
-                key={page}
-              >
-                {page}
-              </button>
-            ))}
-            <button className="btn" onClick={handleNextPage}>
-              Next
-            </button>
-          </div>
+          ))}
+          <button className="btn" onClick={handleNextPage}>
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -2,12 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../../api/axiosInstance";
 import Swal from "sweetalert2";
+import useAxiosInstanceSecure from "../../../api/axiosInstanceSecure";
 
 const DeclineModal = ({ setModalOpen, articleId, refetch }) => {
+  const axiosSecure = useAxiosInstanceSecure();
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
-    const result = await axiosInstance.patch(
+    const result = await axiosSecure.patch(
       `/article/decline/${articleId}`,
       data
     );

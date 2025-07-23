@@ -3,6 +3,7 @@ import { MdFavoriteBorder } from "react-icons/md";
 import "aos/dist/aos.css";
 import { PrimaryButton, SecondaryButton } from "./Buttons";
 import { FaArrowRight } from "react-icons/fa";
+import { Typewriter } from 'react-simple-typewriter'
 
 const PaymentCards = () => {
   return (
