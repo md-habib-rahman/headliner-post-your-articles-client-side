@@ -14,7 +14,7 @@ const ArticleDetails = () => {
 
     if (previousRoute === "allArticles") {
       axiosInstance.patch(`/article/update-view/${id}`);
-      console.log("view updated");
+    //   console.log("view updated");
     }
   }, [id, location]);
 

@@ -9,15 +9,15 @@ const DashboardCard = () => {
   const axiosSecure = useAxiosInstanceSecure();
 
   axiosSecure.get("/articles/count").then((res) => {
-    console.log(res.data);
+    // console.log(res.data);
     setArticleCount(res.data);
   });
   axiosSecure.get("/users/count").then((res) => {
-    console.log(res.data);
+    // console.log(res.data);
     setUsersCount(res.data);
   });
   axiosSecure.get("/article/premium/count").then((res) => {
-    console.log(res.data);
+    // console.log(res.data);
     setPremiumArticleCount(res.data);
   });
 

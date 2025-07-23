@@ -4,7 +4,7 @@ export const setAccessToken = (token) => {
 
 export const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
-  console.log(accessToken);
+//   console.log(accessToken);
   return accessToken;
 };
 

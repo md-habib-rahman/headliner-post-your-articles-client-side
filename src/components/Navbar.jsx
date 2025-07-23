@@ -29,7 +29,7 @@ const Navbar = () => {
   //     isLoading: subLoading,
   //   } = useSubscriptionStatus();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  console.log(role);
+//   console.log(role);
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {

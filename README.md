@@ -11,18 +11,7 @@ This project is built using **React**, **Node.js**, **MongoDB**, and other moder
 - [Introduction](#introduction)
 - [Features](#features)
 - [Technologies](#technologies)
-- [Installation](#installation)
-  - [Backend Setup](#backend-setup)
-  - [Frontend Setup](#frontend-setup)
-- [Usage](#usage)
-  - [User Stories](#user-stories)
-- [Backend API Endpoints](#backend-api-endpoints)
-  - [GET /articles/all](#get-articlesall)
-  - [GET /stats/users](#get-statsusers)
-  - [PUT /users/profile](#put-usersprofile)
-- [Contributing](#contributing)
 - [Admin Credential](#admin-credential)
-- [License](#license)
 - [Screenshots](#screenshots)
 
 ## **Introduction**
@@ -57,15 +46,19 @@ The project uses **TanStack Query**, **React Hook Form**, and **TailwindCSS** to
 - **React CountUp** (for animated numbers)
 - **React Google Charts** (for charts)
 - **AOS** (Animate On Scroll)
+- **PGW**
+- **MAP** with react-leaflet
+- **Lottie Files**
 
 ### **Backend**:
 
 - **Node.js**
 - **Express**
 - **MongoDB**
-- **JWT** (for user authentication, which is planned for future development)
+- **JWT** (Used in privated routes)
 
 ## **admin-credential**
 
+- **Live Site URL**: https://headliner-9e98e.web.app
 - **User**: habib.rahman@live.com
 - **Password**: JKLmnb098@

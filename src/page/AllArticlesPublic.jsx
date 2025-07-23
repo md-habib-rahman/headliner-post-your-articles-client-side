@@ -46,7 +46,6 @@ const AllArticlesPublic = () => {
     },
   });
 
-  console.log(publishers);
 
   useEffect(() => {
     if (selectedFromState) {

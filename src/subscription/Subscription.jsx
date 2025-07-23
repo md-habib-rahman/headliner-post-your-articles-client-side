@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SubscriptionBanner from "./SubscriptionBanner";
 import { MdFavoriteBorder } from "react-icons/md";
 import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router";
+// import { useLocation, useNavigate } from "react-router";
 import Payment from "./Payment";
 
 const Subscription = () => {
   const { user } = useAuth();
-  //   const navigate = useNavigate();
+  //   const location = useLocation();
+  //   const [selected, setSelected] = useState("");
 
-  //   const handleSubscription = () => {
-  //     navigate(`/payment/subscription?email=${user?.email}`);
-  //   };
-  // console.log(user)
+  //   console.log(location?.state?.selectedOption);
+  //   useEffect(() => {
+  //     if (location?.state?.selectedOption) {
+  //       setSelected(location?.state?.selectedOption);
+  //     }
+  //   }, [location.state]);
 
   return (
-    <div >
+    <div>
       <SubscriptionBanner />
 
-      <Payment user={user}/>
+      <Payment />
     </div>
   );
 };

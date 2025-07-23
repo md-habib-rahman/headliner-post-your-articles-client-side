@@ -21,7 +21,7 @@ const ExistingComments = ({ id }) => {
 
   if (isLoading) return <Loader />;
   if (isError) return <div>Error loading Comments!</div>;
-  console.log(comments);
+//   console.log(comments);
   return (
     <div className="space-y-4">
       <p>Comments:</p>

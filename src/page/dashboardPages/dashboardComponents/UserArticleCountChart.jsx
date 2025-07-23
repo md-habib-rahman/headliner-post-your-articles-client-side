@@ -15,7 +15,7 @@ const UserArticleCountChart = () => {
     },
   });
 
-  console.log(data);
+//   console.log(data);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -33,7 +33,7 @@ const UserArticleCountChart = () => {
       setLoading(false);
     }
   }, [data, isLoading]);
-  console.log(barChartData);
+//   console.log(barChartData);
   if (loading) return <div>Loading chart...</div>;
 
   const options = {

@@ -26,7 +26,7 @@ export default function Login() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     LoginWithEmail(data.email, data.password)
       .then((res) => {
         if (res.user) {
@@ -79,7 +79,7 @@ export default function Login() {
         navigate(from);
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
 

@@ -109,7 +109,7 @@ const UpdateArticle = () => {
         navigate("/my-articles");
       }
     } catch (err) {
-      console.log(err.message);
+    //   console.log(err.message);
     }
   };
 

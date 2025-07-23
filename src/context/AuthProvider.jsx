@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
     if (user && !loading) {
       const token = user?.accessToken;
       localStorage.setItem("accessToken", token);
-      console.log("access token saved to local storage", token);
+    //   console.log("access token saved to local storage", token);
     }
   }, [user, loading]);
 
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-      console.log("User in the auth state change: ", currentUser);
+    //   console.log("User in the auth state change: ", currentUser);
     });
     return () => {
       unsubscribe();

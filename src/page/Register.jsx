@@ -72,10 +72,10 @@ const Register = () => {
       };
       updateUserProfile(userProfileForFirebase)
         .then(() => {
-          console.log("Profile updated to firebase");
+        //   console.log("Profile updated to firebase");
         })
         .catch((err) => {
-          console.log(err.message);
+        //   console.log(err.message);
         });
       navigate("/");
       Swal.fire({

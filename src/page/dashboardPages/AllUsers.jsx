@@ -16,10 +16,10 @@ const AllArticles = () => {
   const fetchUsersCount = async () => {
     try {
       const res = await axiosSecure.get("/users/count");
-      console.log(res.data);
+    //   console.log(res.data);
       setUsersCount(res.data);
     } catch (error) {
-      console.error("Error fetching user count:", error);
+    //   console.error("Error fetching user count:", error);
     }
   };
 

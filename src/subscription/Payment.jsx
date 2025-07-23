@@ -5,14 +5,13 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import axios from "axios";
 import React, { useState } from "react";
 import axiosInstance from "../api/axiosInstance";
 
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router";
 import useAxiosInstanceSecure from "../api/axiosInstanceSecure";
+import { useNavigate } from "react-router";
 
 // import '../styles/common.css';
 
@@ -26,7 +25,7 @@ const PaymentForm = () => {
   const axiosSecure = useAxiosInstanceSecure();
   const navigate = useNavigate();
 
-  // console.log(user);
+  //   console.log(selected);
   const handleSubmit = async (event) => {
     // Block native form submission.
     event.preventDefault();
@@ -61,16 +60,16 @@ const PaymentForm = () => {
       setError(error.message);
     } else {
       setError(null);
-      console.log("[PaymentMethod]", paymentMethod);
+      //   console.log("[PaymentMethod]", paymentMethod);
     }
 
     //create payment intent
-    const res = await axiosInstance.post("/create-payment-intent", {
+    const res = await axiosSecure.post("/create-payment-intent", {
       amountInCents,
     });
 
     const clientSecret = res.data.clientSecret;
-    console.log(clientSecret);
+    // console.log(clientSecret);
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: card,
@@ -80,7 +79,7 @@ const PaymentForm = () => {
         },
       },
     });
-    console.log(result);
+    // console.log(result);
     if (result.error) {
       setError(result.error.message);
     } else {
@@ -101,7 +100,7 @@ const PaymentForm = () => {
         );
 
         navigate("/");
-        console.log(userActivation.data);
+        // console.log(userActivation.data);
         setError(null);
       } else {
         setError(`Payment status: ${result.paymentIntent.status}`);
@@ -149,7 +148,7 @@ const PaymentForm = () => {
           className="w-full rounded   shadow-md p-2 border border-primary"
           onChange={handlePlanChange}
         >
-          <option>---Select Plan---</option>
+          <option value="">---Select Plan---</option>
           {paymentPlan.map((plan) => (
             <option key={plan.id} value={plan.price}>
               {plan.value}
