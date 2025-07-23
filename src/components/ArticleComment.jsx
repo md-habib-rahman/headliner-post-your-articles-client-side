@@ -6,10 +6,12 @@ import "aos/dist/aos.css";
 import axiosInstance from "../api/axiosInstance";
 import useAuth from "../hooks/useAuth";
 import { useParams } from "react-router";
+import useAxiosInstanceSecure from "../api/axiosInstanceSecure";
 
 const ArticleComment = () => {
   const { user } = useAuth();
   const { id } = useParams();
+  const axiosSecure = useAxiosInstanceSecure();
 
   const {
     register,
@@ -33,7 +35,7 @@ const ArticleComment = () => {
       commentedAt: new Date().toISOString(),
     };
 
-    const res = await axiosInstance.post("/article/comments", commentData);
+    const res = await axiosSecure.post("/article/comments", commentData);
     if (res.data.insertedId) {
       Swal.fire({
         position: "top-end",

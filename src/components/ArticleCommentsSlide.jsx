@@ -62,10 +62,12 @@ const ArticleCommentsSlide = () => {
   } = useQuery({
     queryKey: ["subscriptionStatus"],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/article/comments`);
+      const res = await axiosInstance.get(`/article-comments`);
       return res.data;
     },
   });
+
+//   console.log(reviews);
 
   if (isLoading) return <Loader />;
   return (
@@ -107,6 +109,7 @@ const ArticleCommentsSlide = () => {
                     size={35}
                     className="absolute text-success-content"
                   />
+				  <h5 className="mt-10 shadow-lg font-semibold bg-base-300 rounded-lg p-2 text-primary">News: {review.articleData.title}</h5>
                   <p className="text-base text-base-content italic mt-10">
                     “{review.commentText}”
                   </p>

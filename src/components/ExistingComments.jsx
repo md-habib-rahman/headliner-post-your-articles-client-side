@@ -10,6 +10,7 @@ const ExistingComments = ({ id }) => {
     data: comments = [],
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: [`articleComments${id}`],
     queryFn: async () => {
