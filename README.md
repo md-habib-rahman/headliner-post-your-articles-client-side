@@ -1,4 +1,4 @@
-![Logo]('assets/head liner logo for light.png')
+![Logo](./src/assets/head%20liner%20logo%20for%20dark.png)
 
 # **Headliner**
 
@@ -62,3 +62,17 @@ The project uses **TanStack Query**, **React Hook Form**, and **TailwindCSS** to
 - **Live Site URL**: https://headliner-9e98e.web.app
 - **User**: habib.rahman@live.com
 - **Password**: JKLmnb098@
+
+## **Screenshots**
+
+![Home Page](./src/assets/screenshots/home.png)
+![Dashboard](./src/assets/screenshots/dashboard_1.png)
+![Dashboard](./src/assets/screenshots/dashboard_2.png)
+![Dashboard](./src/assets/screenshots/dashboard_3.png)
+![Dashboard](./src/assets/screenshots/dashboard_4.png)
+
+![All Articles Page](./src/assets/screenshots/all-articles.png)
+![Premium Article Page](./src/assets/screenshots/premium%20articles.png)
+![Login Page](./src/assets/screenshots/login.png)
+![Registration Page](./src/assets/screenshots/registration.png)
+![About Page](./src/assets/screenshots/about.png)
