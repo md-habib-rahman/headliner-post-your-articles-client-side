@@ -4,6 +4,10 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import AboutIntro from "../components/About/AboutIntro";
 import { OurStory } from "../components/About/OurStory";
+import MissionVisionValues from "../components/About/MissionVisionValues";
+import AboutDeveloper from "../components/About/AboutDeveloper";
+import Statistics from "../components/Statistics";
+import AboutCTA from "../components/About/AboutCTA";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -22,6 +26,10 @@ const AboutUs = () => {
     <>
       <AboutIntro />
       <OurStory />
+      <MissionVisionValues />
+      <AboutDeveloper />
+      <Statistics />
+	  <AboutCTA/>
       <div className="min-h-screen bg-gray-100 p-8 ">
         <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">About Us</h1>

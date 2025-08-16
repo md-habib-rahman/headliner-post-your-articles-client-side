@@ -127,7 +127,7 @@ const Navbar = () => {
                   tabIndex={0}
                   className="btn btn-ghost btn-circle avatar hover:scale-110 transition-transform duration-200"
                 >
-                  <div className="w-8 rounded-full">
+                  <div className="w-8 rounded-full border-2">
                     <img
                       src={
                         user?.photoURL ||
@@ -143,6 +143,7 @@ const Navbar = () => {
                       //     : "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
                       // }
                       alt="User"
+					  
                     />
                   </div>
                 </label>

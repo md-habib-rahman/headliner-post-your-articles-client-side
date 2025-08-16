@@ -6,24 +6,49 @@ import { FaFileAlt, FaNewspaper, FaUsers, FaUserShield } from "react-icons/fa";
 import { RiShieldCheckFill } from "react-icons/ri";
 import "aos/dist/aos.css";
 
-const Statistics = () => {
-  //   const [stats, setStats] = useState({
-  //     totalUsers: 0,
-  //     normalUsers: 0,
-  //     premiumUsers: 0,
-  //   });
+const stats = [
+  {
+    icon: (
+      <FaUsers className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
+    ),
+    value: 50,
+    label: "Total Users",
+  },
+  {
+    icon: (
+      <FaUserShield className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
+    ),
+    value: 1200,
+    label: "Premium Users",
+  },
+  {
+    icon: (
+      <FaNewspaper className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
+    ),
+    value: 25,
+    label: "Total Articles",
+  },
+  {
+    icon: (
+      <RiShieldCheckFill className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
+    ),
+    value: 15,
+    label: "Premium Articles",
+  },
+];
 
-  const {
-    data: stats = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["headLinerStats"],
-    queryFn: async () => {
-      const response = await axiosInstance.get("/stats");
-      return response.data;
-    },
-  });
+const Statistics = () => {
+//   const {
+//     data: stats = [],
+//     isLoading,
+//     isError,
+//   } = useQuery({
+//     queryKey: ["headLinerStats"],
+//     queryFn: async () => {
+//       const response = await axiosInstance.get("/stats");
+//       return response.data;
+//     },
+//   });
 
   //   useEffect(() => {
   //     if (data) {
@@ -31,128 +56,52 @@ const Statistics = () => {
   //     }
   //   }, [data]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching statistics</div>;
+//   if (isLoading) return <div>Loading...</div>;
+//   if (isError) return <div>Error fetching statistics</div>;
 
   return (
-    <div className="max-w-7xl mx-auto p-6 mb-12">
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-8 text-center font-montserrat">
-        Our Impact in Numbers
-      </h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        {/* Total Users */}
-        <div
-          className="bg-base-300 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-          data-aos="fade-right"
-        >
-          <div className="flex items-center mb-4" data-aos="fade-right">
-            <FaUsers className="text-4xl text-primary mr-4" />
-            <h3 className="text-xl font-semibold text-primary">Total Users</h3>
-          </div>
-          <p className="text-2xl font-bold text-primary">
-            <CountUp
-              enableScrollSpy={true}
-              scrollSpyOnce={false}
-              scrollSpyDelay={true}
-              start={0}
-              duration={5}
-              end={stats.totalUsers}
-            />
-          </p>
-        </div>
-
-        {/* Normal Users */}
-        <div
-          className="bg-white dark:bg-base-300 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-          data-aos="fade-right"
-        >
-          <div className="flex items-center mb-4" data-aos="fade-right">
-            <FaUsers className="text-4xl text-primary mr-4" />
-            <h3 className="text-xl font-semibold text-primary">Normal Users</h3>
-          </div>
-          <p className="text-2xl font-bold text-primary">
-            <CountUp
-              enableScrollSpy={true}
-              scrollSpyOnce={false}
-              scrollSpyDelay={true}
-              start={0}
-              duration={5}
-              end={stats.normalUsers}
-            />
-          </p>
-        </div>
-
-        {/* Premium Users */}
-        <div
-          className="bg-secondary/60 border-2 border-secondary p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-          data-aos="flip-left"
-        >
-          <div className="flex items-center mb-4" data-aos="flip-left">
-            <FaUserShield className="text-4xl text-primary mr-4" />
-            <h3 className="text-xl font-semibold text-primary">
-              Premium Users
-            </h3>
-          </div>
-          <p className="text-2xl font-bold text-primary">
-            <CountUp
-              enableScrollSpy={true}
-              scrollSpyOnce={false}
-              scrollSpyDelay={true}
-              start={0}
-              duration={5}
-              end={stats.premiumUsers}
-            />
-          </p>
-        </div>
-
-        {/* Total Articles */}
-        <div
-          className="bg-white dark:bg-base-300 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-          data-aos="fade-left"
-        >
-          <div className="flex items-center mb-4" data-aos="fade-left">
-            <FaNewspaper className="text-4xl text-primary mr-4" />
-            <h3 className="text-xl font-semibold text-primary">
-              Total Articles
-            </h3>
-          </div>
-          <p className="text-2xl font-bold text-primary">
-            <CountUp
-              enableScrollSpy={true}
-              scrollSpyOnce={false}
-              scrollSpyDelay={true}
-              start={0}
-              duration={5}
-              end={stats.allArticles}
-            />
-          </p>
-        </div>
-
-        {/* Premium Articles */}
-        <div
-          className="bg-base-300 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-          data-aos="fade-left"
-        >
-          <div className="flex items-center mb-4" data-aos="fade-left">
-            <RiShieldCheckFill className="text-4xl text-primary mr-4" />
-            <h3 className="text-xl font-semibold text-primary">
-              Premium Articles
-            </h3>
-          </div>
-          <p className="text-2xl font-bold text-primary">
-            <CountUp
-              enableScrollSpy={true}
-              scrollSpyOnce={false}
-              scrollSpyDelay={true}
-              start={0}
-              duration={5}
-              end={stats.premiumArticles}
-            />
-          </p>
+    <section className="bg-base-100 py-16">
+      {" "}
+      {/* Soft, clean white background */}
+      <div className="max-w-7xl mx-auto px-6">
+        {" "}
+        {/* Slightly wider container with padding */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              data-aos="fade-up"
+              data-aos-delay={index * 150}
+              className="transition-transform duration-300 hover:scale-105"
+            >
+              <div className="flex justify-center mb-5">
+                <div
+                  className="p-8 border-2  border-primary rounded-3xl flex items-center justify-center bg-base-200 text-secondary shadow-md"
+                  /* Light lavender bg-base-200 with teal icons and subtle shadow */
+                >
+                  {React.cloneElement(stat.icon, {
+                    size: 48,
+                    className: "text-secondary",
+                  })}
+                </div>
+              </div>
+              <h3 className="text-5xl font-extrabold text-primary mb-2 select-none">
+                <CountUp
+                  end={stat.value}
+                  duration={2.5}
+                  separator=","
+                  enableScrollSpy={true}
+                  scrollSpyOnce={false}
+                />
+              </h3>
+              <p className="text-base-content text-lg font-medium tracking-wide">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
