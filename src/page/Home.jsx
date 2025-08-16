@@ -35,7 +35,7 @@ const Home = () => {
 //   console.log(showModal);
   return (
     <>
-      <div className="max-w-7xl mx-auto  ">
+      <div className="max-w-7xl mx-auto">
         <HeroBanner />
         <NewsTicker />
         <PaymentCards />

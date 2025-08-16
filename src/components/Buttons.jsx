@@ -50,7 +50,7 @@ export const SecondaryLink = ({ children, to, className = "" }) => {
   return (
     <Link
       to={to}
-      className={`inline-block px-6 py-2 rounded-xl border border-secondary text-secondary hover:bg-secondary hover:text-secondary-content font-medium transition duration-200 ${className}`}
+      className={`inline-block px-6 py-2 rounded-xl shadow-md btn-primary  font-semibold btn btn-outline transition duration-200 ${className}`}
     >
       {children}
     </Link>

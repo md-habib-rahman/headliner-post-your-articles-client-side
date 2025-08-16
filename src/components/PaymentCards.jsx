@@ -44,9 +44,10 @@ const PaymentCards = () => {
         {plans.map((plan, index) => (
           <div
             key={index}
-            data-aos="fade-right"
-            className={`bg-base-300 p-6 rounded-lg shadow-lg ${
-              index === 1 && "bg-secondary/60"
+            data-aos="fade-up"
+            data-aos-delay={index * 100}
+            className={`p-6 rounded-lg shadow-lg ${
+              index === 1 ? "bg-warning" : "bg-base-200"
             }`}
           >
             <h3 className="text-xl font-semibold text-primary mb-2 font-montserrat">

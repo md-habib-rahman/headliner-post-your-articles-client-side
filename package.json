@@ -20,6 +20,7 @@
     "firebase": "^11.10.0",
     "leaflet": "^1.7.1",
     "lottie-react": "^2.4.1",
+    "motion": "^12.23.12",
     "react": "^19.1.0",
     "react-awesome-slider": "^4.1.0",
     "react-countup": "^6.5.3",

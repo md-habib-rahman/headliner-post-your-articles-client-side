@@ -24,6 +24,7 @@ export const navLinks = [
   },
   { path: "/premium-articles", label: "Premium Articles", roles: ["premium"] },
   { path: "/dashboard", label: "Dashboard", roles: ["admin"] },
+  { path: "/about-us", label: "About Us",  roles: ["user", "admin", "guest", "premium"], },
   {
     path: "/subscription",
     label: "Subscription",

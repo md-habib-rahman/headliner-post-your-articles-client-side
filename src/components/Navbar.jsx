@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 
 import HeadlinerLogo from "./HeadlinerLogo";
 import { HiOutlineMenu } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { FaCrown, FaMoon, FaSun } from "react-icons/fa";
-import { FiSun } from "react-icons/fi";
+import { FiLogIn, FiSun, FiUserPlus } from "react-icons/fi";
 import {
   PrimaryButton,
   PrimaryLink,
@@ -23,13 +23,12 @@ const Navbar = () => {
   const { user, loading, logOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { role, isLoading, error } = useUserRole();
-  //   const {
-  //     subscription,
-  //     error: subError,
-  //     isLoading: subLoading,
-  //   } = useSubscriptionStatus();
+  const [show, setShow] = useState(true);
+  //   const [lastScrollY, setLastScrollY] = useState(0);
+  let scrollTimeout;
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-//   console.log(role);
+
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -65,13 +64,34 @@ const Navbar = () => {
       });
   };
 
-  //   const userRole = userRole ? (userRole ? 'admin' : 'user') : 'guest';
-  //   const userRole = "guest";
-  //   if (loading) {
-  //     return <Loader />;
-  //   }
+  useEffect(() => {
+    const handleScroll = () => {
+      // Hide navbar immediately on scroll
+      setShow(false);
+
+      // Clear previous timeout if still running
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+
+      // Show navbar after 300ms of no scroll
+      scrollTimeout = setTimeout(() => {
+        setShow(true);
+      }, 200);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
+  }, []);
+
   return (
-    <div className="w-full z-50 backdrop-blur-lg bg-base-100/60 border-b border-base-300 shadow-md">
+    <div
+      className={`fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-base-200 border-b border-base-300 shadow-md transform transition-transform duration-500 ease-in-out ${
+        show ? "translate-y-0" : "-translate-y-full"
+      } `}
+    >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
         <HeadlinerLogo theme={isDark} />
 
@@ -85,7 +105,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `${
                     link.label === "Subscription"
-                      ? "bg-secondary px-4 rounded-2xl py-1 flex items-center gap-2 text-white "
+                      ? "bg-warning px-4 rounded-2xl py-1 flex items-center gap-2 text-base-content"
                       : ""
                   }${
                     isActive
@@ -100,7 +120,7 @@ const Navbar = () => {
             ))}
         </div>
         <div className="flex items-center">
-          <div className="flex items-center gap-6  ">
+          <div className="flex items-center md:gap-6 gap-1">
             {user ? (
               <div className="dropdown dropdown-right dropdown-center ">
                 <label
@@ -151,8 +171,14 @@ const Navbar = () => {
             ) : (
               <>
                 {" "}
-                <PrimaryLink to="/auth/login">Login</PrimaryLink>
-                <SecondaryLink to="/auth/registration">Register</SecondaryLink>
+                <PrimaryLink to="/auth/login">
+                  <FiLogIn className="text-xl block md:hidden" />
+                  <span className="hidden md:block">Login</span>
+                </PrimaryLink>
+                <SecondaryLink to="/auth/registration">
+                  <FiUserPlus className="text-xl block md:hidden" />
+                  <span className="hidden md:block">Register</span>
+                </SecondaryLink>
               </>
             )}
 

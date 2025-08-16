@@ -7,11 +7,34 @@
 @plugin "daisyui/theme" {
   name: light;
   default: true;
-  --color-primary: #09213e;
+  --color-primary: #0a1e3f;
   --color-primary-content: #ffffff;
 
-  --color-secondary: #f59e0b;
+  --color-secondary: #a12828;
   --color-secondary-content: #ffffff;
+
+  --color-accent: #d4af37; 
+  --color-neutral: #1c1f26; 
+
+  --color-base-100: #f9fbfd; /* Very light blue-tinted white */
+  --color-base-200: #eef3f8; /* Pale bluish-gray */
+  --color-base-300: #d7e0ea; /* Soft muted blue-gray */
+
+  --color-base-content: #212529; /* Dark Text */
+
+  --color-info: #3b82f6;
+  --color-success: #2e8b57; /* Emerald Green */
+  --color-warning: #ffb300; /* Amber */
+  --color-error: #d32f2f; /* Crimson */
+  --color-premium: #d4af37;
+
+
+  /* --color-primary: #09213e;
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #A12828; */
+  /* --color-secondary: #f59e0b; */
+  /* --color-secondary-content: #ffffff;
 
   --color-accent: #10b981;
   --color-neutral: #374151;
@@ -24,7 +47,7 @@
   --color-info: #3b82f6;
   --color-success: #10b981;
   --color-warning: #f59e0b;
-  --color-error: #ef4444;
+  --color-error: #ef4444; */
 }
 
 @plugin "daisyui/theme" {
@@ -58,5 +81,3 @@
 * {
   font-family: "Inter", sans-serif;
 }
-
-

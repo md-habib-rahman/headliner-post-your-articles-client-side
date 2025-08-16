@@ -14,7 +14,7 @@ const ArticleSlider = ({ articles }) => {
   //     });
   //   };
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden mt-19">
       <AutoplaySlider
         className="h-80 md:h-100 lg:h-150"
         bullets={true}
