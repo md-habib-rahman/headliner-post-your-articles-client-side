@@ -10,7 +10,7 @@ const plans = [
   {
     title: "Basic Plan",
     features: ["Test Your subscription", "Check the features"],
-    price: "$0.99 / 1 Minute",
+    price: "$0.99 / Day",
   },
   {
     title: "Standard Plan",

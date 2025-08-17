@@ -11,6 +11,7 @@ import SubscriptionModal from "../components/SubscriptionModal";
 import DeclineModal from "./dashboardPages/dashboardComponents/DeclineModal";
 import useAuth from "../hooks/useAuth";
 import { setAccessToken } from "../js/authToken";
+import FeatureArticles from "../components/Home/FeatureArticles";
 
 const Home = () => {
   const { role } = useUserRole();
@@ -25,19 +26,20 @@ const Home = () => {
     }
   }, [role]);
 
-//   useEffect(() => {
-//     if (user) {
-//       const accessToken = user?.accessToken;
-//         setAccessToken(accessToken);
-//     }
-//   }, [user]);
+  //   useEffect(() => {
+  //     if (user) {
+  //       const accessToken = user?.accessToken;
+  //         setAccessToken(accessToken);
+  //     }
+  //   }, [user]);
 
-//   console.log(showModal);
+  //   console.log(showModal);
   return (
     <>
       <div className="max-w-7xl mx-auto">
         <HeroBanner />
         <NewsTicker />
+        <FeatureArticles />
         <PaymentCards />
         <AllPublisher />
         <Statistics />

@@ -127,7 +127,7 @@ const Navbar = () => {
                   tabIndex={0}
                   className="btn btn-ghost btn-circle avatar hover:scale-110 transition-transform duration-200"
                 >
-                  <div className="w-8 rounded-full border-2">
+                  <div className="w-8 rounded-full border-2 border-secondary">
                     <img
                       src={
                         user?.photoURL ||

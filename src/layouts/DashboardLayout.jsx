@@ -72,7 +72,7 @@ export default function DashboardLayout() {
   };
   return (
     <div className="bg-base-100 min-h-screen">
-      {/* Top Navbar */}
+      
       <div className="bg-base-300 w-full">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-4 justify-between w-full">
@@ -168,9 +168,9 @@ export default function DashboardLayout() {
         </div>
       </div>
 
-      {/* Main content area */}
+     
       <div className="max-w-7xl mx-auto px-4 py-6 flex gap-6">
-        {/* Sidebar (shown always on large screens) */}
+       
         <input
           id="my-drawer"
           type="checkbox"
@@ -190,7 +190,7 @@ export default function DashboardLayout() {
           </ul>
         </div>
 
-        {/* Sidebar drawer for small screens */}
+        
         <div className="drawer-side lg:hidden">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-64 p-4">
@@ -202,7 +202,7 @@ export default function DashboardLayout() {
           </ul>
         </div>
 
-        {/* Main Content */}
+        
         <div className="flex-1">
           <Outlet />
         </div>

@@ -4,17 +4,22 @@ import { useLocation, useParams } from "react-router";
 import axiosInstance from "../api/axiosInstance";
 import ArticleComment from "../components/ArticleComment";
 import ExistingComments from "../components/ExistingComments";
+import useUserRole from "../hooks/useUserRole";
+import { PrimaryLink } from "../components/Buttons";
+import Lottie from "lottie-react";
+import notFound from "../assets/not found.json";
 
 const ArticleDetails = () => {
   const { id } = useParams();
   const location = useLocation();
+  const { role, isLoading: roleLoading, error } = useUserRole();
 
   useEffect(() => {
     const previousRoute = location.state?.from;
 
     if (previousRoute === "allArticles") {
       axiosInstance.patch(`/article/update-view/${id}`);
-    //   console.log("view updated");
+      //   console.log("view updated");
     }
   }, [id, location]);
 
@@ -29,6 +34,22 @@ const ArticleDetails = () => {
       return res.data;
     },
   });
+
+  if (role !== "premium" && article?.isPremium) {
+    return (
+      <div className="text-center p-8">
+        <Lottie
+          animationData={notFound}
+          className="w-96 mx-auto"
+          loop={true}
+        ></Lottie>
+        <h2 className="text-xl font-bold">You are not allowed</h2>
+        <PrimaryLink className="mt-4" to="/subscription">
+          Subscribe
+        </PrimaryLink>
+      </div>
+    );
+  }
 
   if (isLoading) return <div className="text-center p-8">Loading...</div>;
   if (isError)

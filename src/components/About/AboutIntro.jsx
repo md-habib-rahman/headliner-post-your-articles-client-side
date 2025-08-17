@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { PrimaryLink } from "../Buttons";
 import bgImage from "../../assets/world-map-vector-isolated-white-background.png";
 
-const AboutIntro = () => {
+const AboutIntro = ({children}) => {
   return (
     <section className="py-28 mt-19 bg-primary/90 text-base-100 relative overflow-hidden">
       <div className="absolute top-0 -z-10">
@@ -17,7 +17,7 @@ const AboutIntro = () => {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="text-4xl md:text-5xl font-bold mb-4"
         >
-          About Us
+          {children}
         </motion.h1>
       </div>
     </section>

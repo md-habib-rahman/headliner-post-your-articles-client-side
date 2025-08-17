@@ -62,10 +62,10 @@ const Statistics = () => {
   return (
     <section className="bg-base-100 py-16">
       {" "}
-      {/* Soft, clean white background */}
+     
       <div className="max-w-7xl mx-auto px-6">
         {" "}
-        {/* Slightly wider container with padding */}
+        
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
           {stats.map((stat, index) => (
             <div
@@ -77,7 +77,7 @@ const Statistics = () => {
               <div className="flex justify-center mb-5">
                 <div
                   className="p-8 border-2  border-primary rounded-3xl flex items-center justify-center bg-base-200 text-secondary shadow-md"
-                  /* Light lavender bg-base-200 with teal icons and subtle shadow */
+                  
                 >
                   {React.cloneElement(stat.icon, {
                     size: 48,

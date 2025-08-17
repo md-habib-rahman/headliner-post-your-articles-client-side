@@ -9,7 +9,7 @@ const AboutCTA = () => {
       <div className="absolute top-0 left-0 w-full h-80 -z-10">
         <img src={ctaBg} alt="" className="w-full h-full object-cover"/>
       </div>
-      <div className="max-w-7xl mx-auto px-6 text-center">
+      <div className="max-w-7xl mx-auto px-6 text-center text-primary">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ const AboutCTA = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut", delay: 0.3 }}
-          className="text-lg md:text-xl mb-8"
+          className="text-lg md:text-xl mb-8 text-base-100"
         >
           Share your stories, discover breaking news, and connect with readers
           around the world.

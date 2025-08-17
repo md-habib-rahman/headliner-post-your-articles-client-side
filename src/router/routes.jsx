@@ -21,6 +21,8 @@ import Subscription from "../subscription/Subscription";
 import Payment from "../subscription/Payment";
 import PremiumArticle from "../page/PremiumArticle";
 import AboutUs from "../page/AboutUs";
+import ContactUs from "../page/ContactUs";
+import VisitorMessage from "../page/dashboardPages/dashboardComponents/VisitorMessage";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "about-us",
         Component: AboutUs,
+      },
+      {
+        path: "contact-us",
+        Component: ContactUs,
       },
       {
         path: "user-profile",
@@ -135,6 +141,8 @@ export const router = createBrowserRouter([
       { path: "all-users", Component: AllUsers },
       { path: "all-articles", Component: AllArticles },
       { path: "add-publisher", Component: AddPublisher },
+      { path: "visitor-messages", Component: VisitorMessage },
+      { path: "user-profile", Component: MyProfile },
     ],
   },
   {

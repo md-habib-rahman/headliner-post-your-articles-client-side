@@ -108,7 +108,7 @@ const PaymentForm = () => {
     }
   };
   const paymentPlan = [
-    { id: 1, value: "1 Minute", price: 0.99, durationInSeconds: 60 },
+    { id: 1, value: "1 Day", price: 0.99, durationInSeconds: 86400 },
     { id: 2, value: "5 Days", price: 19.99, durationInSeconds: 432000 },
     { id: 3, value: "10 Days", price: 29.99, durationInSeconds: 864000 },
   ];
