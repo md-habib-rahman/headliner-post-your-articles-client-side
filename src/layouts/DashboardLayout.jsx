@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router";
+import { Link, NavLink, Outlet, useNavigate } from "react-router";
 import HeadlinerLogo from "../components/HeadlinerLogo";
 import { adminLinks } from "../components/NavLinks";
 import useUserRole from "../hooks/useUserRole";
@@ -10,12 +10,14 @@ import { SecondaryLink } from "../components/Buttons";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import { FaMoon } from "react-icons/fa";
-import { FiSun } from "react-icons/fi";
+import { FiMenu, FiSun, FiX } from "react-icons/fi";
+import { IoLogOut } from "react-icons/io5";
 
 export default function DashboardLayout() {
   const { role, isLoading, error } = useUserRole();
   const { user, logOut } = useAuth();
   const [isDark, setIsDark] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   //   const navigate = useNavigate();
   //   console.log(adminLinks)
   useEffect(() => {
@@ -29,21 +31,21 @@ export default function DashboardLayout() {
     document.title = "HeadLiner | Dashboard";
   }, []);
 
-  if (role !== "admin") {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <Lottie
-          animationData={animationData}
-          loop={true}
-          className="w-full h-96"
-        />
-        <p className="text-2xl font-semibold text-slate-500">
-          You are not authorized!
-        </p>
-        <SecondaryLink to={"/"}>Go To Home</SecondaryLink>
-      </div>
-    );
-  }
+  //   if (role !== "admin") {
+  //     return (
+  //       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+  //         <Lottie
+  //           animationData={animationData}
+  //           loop={true}
+  //           className="w-full h-96"
+  //         />
+  //         <p className="text-2xl font-semibold text-slate-500">
+  //           You are not authorized!
+  //         </p>
+  //         <SecondaryLink to={"/"}>Go To Home</SecondaryLink>
+  //       </div>
+  //     );
+  //   }
 
   const handleThemeChange = () => {
     setIsDark(!isDark);
@@ -71,142 +73,117 @@ export default function DashboardLayout() {
       });
   };
   return (
-    <div className="bg-base-100 min-h-screen">
-      
-      <div className="bg-base-300 w-full">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-          <div className="flex items-center space-x-4 justify-between w-full">
-            <div className="lg:hidden">
-              <label htmlFor="my-drawer" className="btn btn-square btn-ghost">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="h-6 w-6 stroke-current"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </label>
-            </div>
-            <HeadlinerLogo />
-            <div className="flex items-center gap-6">
-              {user ? (
-                <div className="dropdown dropdown-right dropdown-center ">
-                  <label
-                    tabIndex={0}
-                    className="btn btn-ghost btn-circle avatar hover:scale-110 transition-transform duration-200"
-                  >
-                    <div className="w-8 rounded-full">
-                      <img
-                        src={
-                          user?.photoURL ||
-                          "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
-                        }
-                        onError={(e) =>
-                          (e.currentTarget.src =
-                            "https://i.ibb.co/jZf74p9g/User-avatar-svg.png")
-                        }
-                        // src={
-                        //   user?.photoURL
-                        //     ? user?.photoURL
-                        //     : "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
-                        // }
-                        alt="User"
-                      />
-                    </div>
-                  </label>
-                  <ul
-                    tabIndex={0}
-                    className="menu menu-sm dropdown-content mt-3 p-2 shadow-sm rounded-box fixed w-52  bg-base-100  z-50"
-                  >
-                    <li>
-                      <Link
-                        to="user-profile"
-                        className="justify-between text-md bg-secondary/60 mb-1.5 hover:scale-102 transition-all"
-                      >
-                        Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogout}
-                        className="text-md bg-secondary/60 hover:scale-102 transition-all"
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              ) : (
-                <>
-                  {" "}
-                  <PrimaryLink to="/auth/login">Login</PrimaryLink>
-                  <SecondaryLink to="/auth/registration">
-                    Register
-                  </SecondaryLink>
-                </>
-              )}
+    <div className="flex min-h-screen bg-base-100 text-base-content font-sans">
+      <header className="md:hidden flex items-center justify-between bg-primary text-base-100 px-4 py-3 fixed top-0 left-0 right-0 z-30">
+        <div className="text-xl font-bold tracking-wide">
+          Headliner Dashboard
+        </div>
+        <button
+          onClick={() => setDrawerOpen(true)}
+          aria-label="Open menu"
+          className="focus:outline-none"
+        >
+          <FiMenu size={28} />
+        </button>
+      </header>
 
-              <button
-                onClick={handleThemeChange}
-                className="btn btn-ghost btn-circle text-xl"
-                aria-label="Toggle Theme"
-              >
-                {isDark ? (
-                  <FaMoon className="text-yellow-400" />
-                ) : (
-                  <FiSun className="text-indigo-500" />
-                )}
-              </button>
-            </div>
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-20 z-40 transition-opacity duration-300 ${
+          drawerOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        } md:hidden`}
+        onClick={() => setDrawerOpen(false)}
+      />
+
+      <aside
+        className={`
+          fixed top-0 left-0 bottom-0 z-50 w-64 bg-primary/60 text-base-100
+          transform transition-transform duration-300 py-10
+          ${drawerOpen ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0 md:static md:flex md:flex-col
+        `}
+      >
+        <HeadlinerLogo />
+
+        <div className="flex items-center justify-between px-6 py-6 border-b border-base-200 md:hidden">
+          <div className="text-2xl font-bold tracking-wide">
+            Headliner Dashboard
           </div>
+          <button
+            onClick={() => setDrawerOpen(false)}
+            aria-label="Close menu"
+            className="focus:outline-none"
+          >
+            <FiX size={28} />
+          </button>
         </div>
-      </div>
 
-     
-      <div className="max-w-7xl mx-auto px-4 py-6 flex gap-6">
-       
-        <input
-          id="my-drawer"
-          type="checkbox"
-          className="drawer-toggle hidden"
-        />
-
-        <div className="hidden lg:block bg-base-200 rounded-lg p-4 h-fit">
-          <ul className="menu text-base-content space-y-2">
-            {adminLinks.map((link, idx) => (
-              <li key={idx} className="border-b-1 border-base-300">
-                <Link to={link.path}>
-                  {link.label}
-                  {link.icon}
-                </Link>
-              </li>
+        <nav className="flex flex-col flex-grow px-4 py-6 space-y-3">
+          {adminLinks
+            .filter((link) => link.role.includes(role))
+            .map(({ path, label, icon }) => (
+              <NavLink
+                key={path}
+                to={path}
+                end
+                onClick={() => setDrawerOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors
+                 ${
+                   isActive
+                     ? "bg-base-200 text-primary font-semibold"
+                     : "hover:bg-secondary"
+                 }`
+                }
+              >
+                {icon}
+                <span>{label}</span>
+              </NavLink>
             ))}
-          </ul>
+          <button
+            className="flex items-center justify-start gap-3 hover:bg-secondary py-2 rounded-lg transition-colors font-semibold px-3 hover:border-0 cursor-pointer"
+            onClick={handleLogout}
+          >
+            <IoLogOut />
+            Log Out
+          </button>
+        </nav>
+        <div className="p-6 border-t border-base-200 text-sm text-base-100 opacity-70">
+          &copy; 2025 HeadLiner
         </div>
+      </aside>
 
-        
-        <div className="drawer-side lg:hidden">
-          <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu bg-base-200 text-base-content min-h-full w-64 p-4">
-            {adminLinks.map((link, idx) => (
-              <li key={idx}>
-                <Link to={link.path}>{link.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <main className="flex-grow p-6 md:p-8 bg-base-100 min-h-screen ">
+        <header className="hidden md:flex justify-between items-center mb-8 border-b-2 border-base-300">
+          <h1 className="text-3xl font-extrabold text-primary">Dashboard</h1>
+          <div className="flex  items-center">
+            <img
+              className="w-15 h-15 rounded-full border-base-100 border-2"
+              src={
+                user?.photoURL ||
+                "https://i.ibb.co/jZf74p9g/User-avatar-svg.png"
+              }
+              onError={(e) =>
+                (e.currentTarget.src =
+                  "https://i.ibb.co/jZf74p9g/User-avatar-svg.png")
+              }
+              alt="User"
+            />
+            <button
+              onClick={handleThemeChange}
+              className="btn btn-ghost btn-circle text-xl"
+              aria-label="Toggle Theme"
+            >
+              {!isDark ? (
+                <FaMoon className="text-yellow-400" />
+              ) : (
+                <FiSun className="text-indigo-500" />
+              )}
+            </button>
+          </div>
+        </header>
 
-        
-        <div className="flex-1">
-          <Outlet />
-        </div>
-      </div>
+        <Outlet />
+      </main>
     </div>
   );
 }

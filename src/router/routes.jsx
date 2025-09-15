@@ -93,23 +93,6 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-
-      {
-        path: "/add-articles",
-        element: (
-          <PrivateRoute>
-            <AddArticles />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/my-articles",
-        element: (
-          <PrivateRoute>
-            <MyArticles />
-          </PrivateRoute>
-        ),
-      },
     ],
   },
   {
@@ -143,6 +126,22 @@ export const router = createBrowserRouter([
       { path: "add-publisher", Component: AddPublisher },
       { path: "visitor-messages", Component: VisitorMessage },
       { path: "user-profile", Component: MyProfile },
+      {
+        path: "add-articles",
+        element: (
+          <PrivateRoute>
+            <AddArticles />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-articles",
+        element: (
+          <PrivateRoute>
+            <MyArticles />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {

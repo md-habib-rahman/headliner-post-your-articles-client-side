@@ -11,28 +11,28 @@ const stats = [
     icon: (
       <FaUsers className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
     ),
-    value: 50,
+    value: 150,
     label: "Total Users",
   },
   {
     icon: (
       <FaUserShield className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
     ),
-    value: 1200,
+    value: 50,
     label: "Premium Users",
   },
   {
     icon: (
       <FaNewspaper className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
     ),
-    value: 25,
+    value: 1200,
     label: "Total Articles",
   },
   {
     icon: (
       <RiShieldCheckFill className="text-primary text-4xl hover:scale-150 transition-all duration-300" />
     ),
-    value: 15,
+    value: 350,
     label: "Premium Articles",
   },
 ];

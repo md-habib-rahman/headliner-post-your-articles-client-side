@@ -17,7 +17,7 @@ const FeatureArticles = () => {
     },
   });
 
-  console.log(articles);
+//   console.log(articles);
 
   if (isLoading) return <p className="text-center">Loading...</p>;
   if (isError)

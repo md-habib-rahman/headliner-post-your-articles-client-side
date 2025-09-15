@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosInstanceSecure from "../api/axiosInstanceSecure";
 
 export default function AddArticles() {
-	const axiosSecure = useAxiosInstanceSecure();
+  const axiosSecure = useAxiosInstanceSecure();
   const { user } = useAuth();
   const {
     data: publishers = [],
@@ -76,10 +76,10 @@ export default function AddArticles() {
         createdBy: user?.email,
         createdAt: new Date().toISOString(),
       };
-    //   console.log(articleData);
+      //   console.log(articleData);
 
       const response = await axiosSecure.post("/articles", articleData);
-    //   console.log(articleData);
+      //   console.log(articleData);
       if (response.data.success) {
         Swal.fire({
           position: "top-end",

@@ -82,7 +82,7 @@ const AllArticlesPublic = () => {
     return <div className="text-center p-8">Error loading articles</div>;
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-6 mt-19">
       <h2 className="text-2xl font-bold text-primary mb-4 font-montserrat">
         All Articles
       </h2>

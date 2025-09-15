@@ -12,6 +12,7 @@ import DeclineModal from "./dashboardPages/dashboardComponents/DeclineModal";
 import useAuth from "../hooks/useAuth";
 import { setAccessToken } from "../js/authToken";
 import FeatureArticles from "../components/Home/FeatureArticles";
+import RecentArticles from "../components/Home/RecentArticles";
 
 const Home = () => {
   const { role } = useUserRole();
@@ -41,6 +42,7 @@ const Home = () => {
         <NewsTicker />
         <FeatureArticles />
         <PaymentCards />
+        <RecentArticles />
         <AllPublisher />
         <Statistics />
         <ArticleCommentsSlide />
